@@ -67,4 +67,7 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
 }
 
 //  Include additional files
-require_once plugin_dir_path(__FILE__) . 'includes/product-meta-fields.php';
+
+require_once plugin_dir_path(__FILE__) . 'includes/page-settings-fields.php';
+require_once plugin_dir_path(__FILE__) . 'includes/page-product-meta-fields.php';
+
