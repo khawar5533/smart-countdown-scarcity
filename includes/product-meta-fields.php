@@ -2,7 +2,9 @@
 if (!class_exists('WBGS_Productmeta')) {
   class WBGS_Productmeta{
     public function __construct() {
+      //load meta fields
         add_action('woocommerce_product_options_general_product_data', [$this, 'wbgs_add_text_field']);
+        //save meta fields
         add_action('woocommerce_process_product_meta', [$this, 'wbgs_save_field']);
     }
     public function wbgs_add_text_field() {
