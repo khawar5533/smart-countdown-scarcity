@@ -1,7 +1,6 @@
 <?php
 
 if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
-
     class WBGS_SmartCountdownScarcitySetting {
 
         public function __construct() {
