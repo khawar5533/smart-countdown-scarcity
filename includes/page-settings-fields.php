@@ -2,24 +2,24 @@
 if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
     class WBGS_SmartCountdownScarcitySetting {
         public function __construct() {
-            add_action('admin_menu', [ $this, 'add_settings_menu' ]);
-            add_action('admin_init', [ $this, 'register_settings' ]);
+            add_action('admin_menu', [ $this, 'wbgs_add_settings_menu' ]);
+            add_action('admin_init', [ $this, 'wbgs_register_settings' ]);
             add_action('wp_ajax_wbgs_get_product_meta', [$this,'wbgs_get_product_meta']);
         }
 // For setting menu
-        public function add_settings_menu() {
+        public function wbgs_add_settings_menu() {
             add_menu_page(
                 'Smart Countdown Settings',        // Page title
                 'Countdown Settings',              // Menu title
                 'manage_options',                  // Capability
                 'wbgs_settings',                   // Menu slug
-                [ $this, 'render_settings_page' ], // Callback
+                [ $this, 'wbgs_render_settings_page' ], // Callback
                 'dashicons-clock',                 // Icon
                 56
             );
         }
 // For Register setting
-        public function register_settings() {
+        public function wbgs_register_settings() {
             register_setting('wbgs_plugin_settings', 'wbgs_settings_options');
 
             add_settings_section(
@@ -34,7 +34,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
             add_settings_field(
                 'selected_product',
                 'Select Product',
-                [ $this, 'render_product_dropdown' ],
+                [ $this, 'wbgs_render_product_dropdown' ],
                 'wbgs_settings',
                 'wbgs_section_main'
             );
@@ -42,13 +42,13 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
             add_settings_field(
                 'product_status',
                 'Enable/Disable',
-                [ $this, 'render_radio_buttons' ],
+                [ $this, 'wbgs_render_radio_buttons' ],
                 'wbgs_settings',
                 'wbgs_section_main'
             );
         }
     // Create the product dropdown
-         public function render_product_dropdown() {
+         public function wbgs_render_product_dropdown() {
             $options = get_option('wbgs_settings_options');
             $selected_product = isset($options['selected_product']) ? $options['selected_product'] : '';
 
@@ -68,7 +68,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
             echo '</select>';
         }
         //Create the radio button option
-        public function render_radio_buttons() {
+        public function wbgs_render_radio_buttons() {
             $options = get_option('wbgs_settings_options');
             $status = isset($options['product_status']) ? $options['product_status'] : 'enable';
 
@@ -77,7 +77,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
         }
         //Render the page settings
         
-       public function render_settings_page() {
+       public function wbgs_render_settings_page() {
 
             $options = get_option('wbgs_settings_options');
             $product_id = isset($options['selected_product']) ? $options['selected_product'] : '';
