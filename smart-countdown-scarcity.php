@@ -24,6 +24,8 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
     class WBGS_SmartCountdownScarcity {
 
         public function __construct() {
+           //load script and css files
+            add_action('admin_enqueue_scripts',[$this,'wbgs_enqueue_admin_scripts']);
             // Check dependencies when all plugins are loaded
             add_action('plugins_loaded', [$this, 'wbgs_check_woocommerce_dependency']);
         }
@@ -60,6 +62,20 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
         public function wbgs_woocommerce_missing_notice() {
             echo '<div class="notice notice-error is-dismissible"><p><strong>Smart Countdown Scarcity</strong> requires WooCommerce to be installed and active.</p></div>';
         }
+        public function wbgs_enqueue_admin_scripts() {
+
+            // Enqueue media uploader
+            wp_enqueue_media();
+            // Enqueue your JS file
+            wp_enqueue_script(
+                'my-plugin-admin-js',
+                plugin_dir_url(__FILE__) . 'assets/js/wbgs-main.js',
+                ['jquery'],
+                true
+            );
+        
+ 
+}
     }
 
     // Instantiate the class
@@ -69,5 +85,5 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
 //  Include additional files
 
 require_once plugin_dir_path(__FILE__) . 'includes/page-settings-fields.php';
-require_once plugin_dir_path(__FILE__) . 'includes/page-product-meta-fields.php';
+require_once plugin_dir_path(__FILE__) . 'includes/product-meta-fields.php';
 
