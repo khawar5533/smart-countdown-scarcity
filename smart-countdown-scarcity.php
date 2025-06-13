@@ -68,10 +68,17 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
             wp_enqueue_media();
             // Enqueue your JS file
             wp_enqueue_script(
-                'my-plugin-admin-js',
+                'wbgs-admin-js',
                 plugin_dir_url(__FILE__) . 'assets/js/wbgs-main.js',
                 ['jquery'],
                 true
+            );
+            // Enqueue CSS
+            wp_enqueue_style(
+                'wbgs-admin-css',
+                plugin_dir_url(__FILE__) . 'assets/css/wbgs-styles.css',
+                [],
+                null // version (you can specify a version if needed)
             );
         
  
