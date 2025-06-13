@@ -1,3 +1,4 @@
+ // Used for upload banner image
  jQuery(function($){
         $('.upload_image_button').on('click', function(e){
             e.preventDefault();
