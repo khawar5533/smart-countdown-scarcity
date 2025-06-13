@@ -1,8 +1,6 @@
 <?php
-
 if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
     class WBGS_SmartCountdownScarcitySetting {
-
         public function __construct() {
             add_action('admin_menu', [ $this, 'add_settings_menu' ]);
             add_action('admin_init', [ $this, 'register_settings' ]);
