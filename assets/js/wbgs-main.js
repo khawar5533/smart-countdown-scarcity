@@ -1,43 +1,99 @@
  // Used for upload banner image
- jQuery(function($){
-        $('.upload_image_button').on('click', function(e){
-            e.preventDefault();
-            var button = $(this);
-            var field = $('#wbgs_banner_image');
-            var custom_uploader = wp.media({
-                title: 'Select Image',
-                button: { text: 'Use this image' },
-                multiple: false
-            }).on('select', function() {
-                var attachment = custom_uploader.state().get('selection').first().toJSON();
-                field.val(attachment.url);
-            }).open();
-        });
-    });
- // add or update hidden values using ajax
-   jQuery(document).ready(function($) {
-    $('#wbgs_select_product').on('change', function() {
-        var selectedValue = $(this).val();
-        if (!selectedValue) return;
+ jQuery(document).ready(function($) {
+    let mediaUploader; // Declare outside the click handler
 
+    $('#wbgs_upload_banner').on('click', function(e) {
+        e.preventDefault();
+
+        // If mediaUploader already exists, reopen it
+        if (mediaUploader) {
+            mediaUploader.open();
+            return;
+        }
+
+        // Create a new media uploader instance
+        mediaUploader = wp.media({
+            title: 'Select Banner',
+            button: {
+                text: 'Use this image'
+            },
+            multiple: false
+        });
+
+        // When an image is selected, run this function
+        mediaUploader.on('select', function() {
+            const attachment = mediaUploader.state().get('selection').first().toJSON();
+
+            // Set the URL in the hidden input field
+            $('#wbgs_modal_banner').val(attachment.url);
+
+            // Show the image preview
+            $('#wbgs_banner_preview').html(
+                '<img src="' + attachment.url + '" id="wbgs-hide-image" style="max-width:100px;">'
+            );
+        });
+
+        // Open the media uploader
+        mediaUploader.open();
+    });
+
+// add or update hidden values using ajax
+$('#wbgs_save_modal').on('click', function(e) {
+        e.preventDefault();
+       let datetime = $('#wbgs_modal_end_time').val();
+       let dateOnly = datetime.replace('T', ' ');
+       $('#wbgs_modal_end_time').val(datetime);
+        const data = {
+            action: 'wbgs_save_product_settings',
+            product_id: $('#wbgs_modal_product_id').val(),
+            stock_alert: $('#wbgs_modal_stock_alert').val(),
+            end_time: dateOnly,
+            banner_image: $('#wbgs_modal_banner').val(),
+            disable:'disable',
+            wbgs_ajax_nonce: wbgs_data.nonce || false
+        };
         $.ajax({
-            url: ajaxurl, // WordPress variable for admin AJAX URL
-            method: 'POST',
-            data: {
-                action: 'wbgs_get_product_meta',
-                product_id: selectedValue
-            },
+            url: wbgs_data.ajaxurl,
+            type: 'POST',
+            data: data,
+            dataType: 'json',
             success: function(response) {
-                if (response.success) {
-                    $('#wbgs_duration').val(response.data.wbgs_duration);
-                    $('#wbgs_stock_alert').val(response.data.wbgs_stock_alert);
-                    $('#wbgs_banner_image').val(response.data.wbgs_banner_image);
+                if (response.success === true) {
+                $('#wbgs_message').addClass('notice-success')
+                .css('display','block')
+                .removeClass('notice-error')
+                .text(response.data.message)
+                .fadeIn();
+
+                // Clear inputs after success
+                $('#wbgs_modal_product_id').val('');
+                $('#wbgs_modal_stock_alert').val('');
+                $('#wbgs_modal_end_time').val('');
+                $('#wbgs_modal_banner').val('');
+                $('#wbgs_banner_preview').empty();
+
+                messageTimer = setTimeout(function() {
+                    $('#wbgs_message').fadeOut();
+                }, 10000);
                 } else {
-                    alert('Failed to fetch product metadata.');
-                }
+                $('#wbgs_message')
+                .addClass('notice-error')
+                .removeClass('notice-success')
+                .text((response.data && response.data.message) || 'Unknown error')
+                .fadeIn();
+            // Clear inputs after success
+            $('#wbgs_modal_product_id').val('');
+            $('#wbgs_modal_stock_alert').val('');
+            $('#wbgs_modal_end_time').val('');
+            $('#wbgs_modal_banner').val('');
+            $('#wbgs_banner_preview').empty();
+            messageTimer = setTimeout(function() {
+                $('#wbgs_message').fadeOut();
+            }, 10000);
+                    }
             },
-            error: function() {
-                alert('AJAX request failed.');
+            error: function(xhr, status, error) {
+                alert('AJAX Error: ' + error);
             }
         });
     });

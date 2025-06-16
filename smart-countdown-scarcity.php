@@ -73,6 +73,11 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
                 ['jquery'],
                 true
             );
+            // Localize the script to pass PHP data to JS
+             wp_localize_script('wbgs-admin-js', 'wbgs_data', [
+                'ajaxurl' => admin_url('admin-ajax.php'),
+                'nonce'   => wp_create_nonce('wbgs_nonce')
+            ]);
             // Enqueue CSS
             wp_enqueue_style(
                 'wbgs-admin-css',
@@ -92,5 +97,5 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
 //  Include additional files
 
 require_once plugin_dir_path(__FILE__) . 'includes/page-settings-fields.php';
-require_once plugin_dir_path(__FILE__) . 'includes/product-meta-fields.php';
+
 
