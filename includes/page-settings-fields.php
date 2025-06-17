@@ -86,7 +86,9 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
             </tr>
             </thead>
             <tbody>
-                <?php foreach($combined_data as $key => $alert_data) { 
+                <?php
+                if(!empty($combined_data)){
+                 foreach($combined_data as $key => $alert_data) { 
                     $product_id = isset($alert_data['id']) ? $alert_data['id'] : '';
                     $stock_alert = isset($alert_data['stock_alert']) ? $alert_data['stock_alert'] : '';
                     $end_time = isset($alert_data['end_time']) ? $alert_data['end_time'] : '';
@@ -114,8 +116,9 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                     <td><img src="<?php echo esc_url($banner_image) ;?>" alt="Banner Image" width="50" height="25"></td>
                     <td><?php echo esc_attr($status);?></td>
                 </tr> 
+                <?php }}else{ ?>
+                    <tr><td colspan="6" style="text-align: center;"><?php esc_html_e('Not Recored Found', 'smart-countdown-scarcity'); ?></td></tr>
                 <?php } ?>
-                
             </tbody>
             </table>
             </div>
@@ -190,5 +193,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
 
     new WBGS_SmartCountdownScarcitySetting();
 }
+
+
 
 
