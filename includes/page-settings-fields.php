@@ -46,7 +46,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                 <input type="datetime-local" id="wbgs_modal_end_time"><br><br>
 
                 <label><?php esc_html_e('Banner Image', 'smart-countdown-scarcity'); ?></label><br>
-                <input type="hidden">
+                <input type="hidden" id="wbgs_modal_banner" name="wbgs_modal_banner">
                 <button class="button" id="wbgs_upload_banner"><?php esc_html_e('Select Image', 'smart-countdown-scarcity'); ?></button>
                 <div id="wbgs_banner_preview" style="margin-top:10px;"></div><br>
             </div>
@@ -54,7 +54,71 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
             </form>
         </div> 
         <?php
+        //fetch products
+        $combined_data = [];
+        $products = get_posts([
+            'post_type' => 'product',
+            'numberposts' => -1
+        ]);
+        foreach ($products as $product) {
+            $product_id = $product->ID;
+            $product_data = get_option("wbgs_product_{$product_id}_data");
+            if (is_array($product_data)) {
+        // Index the data using the product ID
+             $combined_data[$product_id] = $product_data;
+           }
         }
+        // Sort by product ID
+        ksort($combined_data);
+         ?>
+         <div class="wbgs_products_detail">
+            <h3><?php esc_html_e('Product Sale Alert', 'smart-countdown-scarcity'); ?></h3>
+         <table  cellpadding="8" cellspacing="0" border="1">
+            <thead>
+               <tr>
+                <th><?php echo esc_html( 'Action' ); ?></th>
+                <th><?php echo esc_html( 'Name' ); ?></th>
+                <th><?php echo esc_html( 'Stock Alert' ); ?></th>
+                <th><?php echo esc_html( 'Duration' ); ?></th>
+                <th><?php echo esc_html( 'Banner' ); ?></th>
+                <th><?php echo esc_html( 'Status' ); ?></th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php foreach($combined_data as $key => $alert_data) { 
+                    $product_id = isset($alert_data['id']) ? $alert_data['id'] : '';
+                    $stock_alert = isset($alert_data['stock_alert']) ? $alert_data['stock_alert'] : '';
+                    $end_time = isset($alert_data['end_time']) ? $alert_data['end_time'] : '';
+
+                    if ( ! empty( $end_time ) ) {
+                        $formatted_date = date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $end_time );
+                    }
+
+                    $banner_image = isset($alert_data['banner_image']) ? $alert_data['banner_image'] : '';
+                    $status = isset($alert_data['status']) ? $alert_data['status'] : '';
+                    ?>
+                <tr>
+                    <td>
+                    <input 
+                        type="radio" 
+                        id="wbgs-option-<?php echo esc_attr( $product_id ); ?>" 
+                        name="choice" 
+                        value="<?php echo esc_attr( $status ); ?>" 
+                        data-product-id="<?php echo esc_attr( $product_id ); ?>">
+                    </td>
+                    <td><?php echo esc_attr(get_the_title( $product_id  ));?></td>
+                    <td><?php echo esc_attr($stock_alert); ?></td>
+                    <td><?php echo esc_attr($formatted_date);?></td>
+                    <td><img src="<?php echo esc_url($banner_image) ;?>" alt="Banner Image" width="20" height="20"></td>
+                    <td><?php echo esc_attr($status);?></td>
+                </tr> 
+                <?php } ?>
+                
+            </tbody>
+            </table>
+                </div>
+        <?php
+     }
         //Save product settings
      public function wbgs_save_product_settings() {
       
