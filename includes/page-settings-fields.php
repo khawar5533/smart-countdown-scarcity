@@ -3,9 +3,10 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
     class WBGS_SmartCountdownScarcitySetting {
         public function __construct() {
             add_action('admin_menu', [ $this, 'wbgs_add_settings_menu' ]);
+            add_action('wp_ajax_wbgs_edit_product_status', [$this, 'wbgs_edit_product_status']); 
            add_action('wp_ajax_wbgs_save_product_settings', [$this, 'wbgs_save_product_settings']);
         }
-// For setting menu
+    // For setting menu
         public function wbgs_add_settings_menu() {
             add_menu_page(
                 'Smart Countdown Settings',        // Page title
@@ -73,7 +74,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
          ?>
          <div class="wbgs_products_detail">
             <h3><?php esc_html_e('Product Sale Alert', 'smart-countdown-scarcity'); ?></h3>
-         <table  cellpadding="8" cellspacing="0" border="1">
+         <table id="wbgs_products_table"  cellpadding="8" cellspacing="0" border="1">
             <thead>
                <tr>
                 <th><?php echo esc_html( 'Action' ); ?></th>
@@ -104,19 +105,20 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                         id="wbgs-option-<?php echo esc_attr( $product_id ); ?>" 
                         name="choice" 
                         value="<?php echo esc_attr( $status ); ?>" 
-                        data-product-id="<?php echo esc_attr( $product_id ); ?>">
+                        data-product-id="<?php echo esc_attr( $product_id ); ?>" <?php echo ( isset($alert_data['status']) && $alert_data['status'] === 'enable' ) ? 'checked' : ''; ?>>
+                        
                     </td>
                     <td><?php echo esc_attr(get_the_title( $product_id  ));?></td>
                     <td><?php echo esc_attr($stock_alert); ?></td>
                     <td><?php echo esc_attr($formatted_date);?></td>
-                    <td><img src="<?php echo esc_url($banner_image) ;?>" alt="Banner Image" width="20" height="20"></td>
+                    <td><img src="<?php echo esc_url($banner_image) ;?>" alt="Banner Image" width="50" height="25"></td>
                     <td><?php echo esc_attr($status);?></td>
                 </tr> 
                 <?php } ?>
                 
             </tbody>
             </table>
-                </div>
+            </div>
         <?php
      }
         //Save product settings
@@ -153,6 +155,38 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
         update_option("wbgs_product_{$product_id}_data", $data);
         wp_send_json_success(['message' => 'Product settings saved successfully.']);
     }
+    //update the product statius
+    public function wbgs_edit_product_status() {
+        // Security check (optional but recommended)
+        // check_ajax_referer('wbgs_ajax_nonce', 'nonce');
+
+        $product_id = intval($_POST['product_id']);
+        $selected_value = sanitize_text_field($_POST['selected_value']);
+
+        // Validate input
+        if ($product_id && in_array($selected_value, ['enable', 'disable'])) {
+            // Construct the correct option key
+            $option_key = 'wbgs_product_' . $product_id . '_data';
+
+            // Get current option value (serialized array)
+            $option_data = get_option($option_key);
+
+            if (is_array($option_data)) {
+                // Update just the status
+                $option_data['status'] = $selected_value;
+
+                // Save it back
+                update_option($option_key, $option_data);
+
+                wp_send_json_success('Status updated to ' . $selected_value);
+            } else {
+                wp_send_json_error('Product data not found');
+            }
+        } else {
+            wp_send_json_error('Invalid data');
+        }
+    }
+
 
  }
 

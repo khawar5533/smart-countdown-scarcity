@@ -75,6 +75,7 @@ $('#wbgs_save_modal').on('click', function(e) {
                 messageTimer = setTimeout(function() {
                     $('#wbgs_message').fadeOut();
                 }, 10000);
+                 $('#wbgs_products_table').load(location.href + ' #wbgs_products_table > *');
                 } else {
                 $('#wbgs_message')
                 .addClass('notice-error')
@@ -90,11 +91,60 @@ $('#wbgs_save_modal').on('click', function(e) {
             messageTimer = setTimeout(function() {
                 $('#wbgs_message').fadeOut();
             }, 10000);
-                    }
+
+             $('#wbgs_products_table').load(location.href + ' #wbgs_products_table > *');
+            }
             },
             error: function(xhr, status, error) {
                 alert('AJAX Error: ' + error);
             }
         });
     });
+//Update radio button status
+$(document).on('change', 'input[name="choice"]', function () {
+    var $selected = $(this);
+    var selectedProductId = $selected.data('product-id');
+
+    // 1. Send 'enable' for the selected radio
+    $.ajax({
+        url: wbgs_data.ajaxurl,
+        type: 'POST',
+        data: {
+            action: 'wbgs_edit_product_status',
+            product_id: selectedProductId,
+            selected_value: 'enable'
+        },
+        success: function (response) {
+            console.log('Enabled:', response);
+           $('#wbgs_products_table').load(location.href + ' #wbgs_products_table > *');
+        },
+        error: function (xhr, status, error) {
+            console.error('AJAX error (enable):', error);
+        }
+    });
+
+    // 2. Send 'disable' for all others in the group
+    $('input[name="choice"]').not($selected).each(function () {
+        var $other = $(this);
+        var otherProductId = $other.data('product-id');
+
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'wbgs_edit_product_status',
+                product_id: otherProductId,
+                selected_value: 'disable'
+            },
+            success: function (response) {
+                console.log('Disabled:', response);
+                $('#wbgs_products_table').load(location.href + ' #wbgs_products_table > *');
+            },
+            error: function (xhr, status, error) {
+                console.error('AJAX error (disable):', error);
+            }
+        });
+    });
+  });
+
 });
