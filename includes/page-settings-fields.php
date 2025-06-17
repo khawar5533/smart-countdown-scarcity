@@ -158,8 +158,6 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
     //update the product statius
     public function wbgs_edit_product_status() {
         // Security check (optional but recommended)
-        // check_ajax_referer('wbgs_ajax_nonce', 'nonce');
-
         $product_id = intval($_POST['product_id']);
         $selected_value = sanitize_text_field($_POST['selected_value']);
 
