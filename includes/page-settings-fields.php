@@ -44,7 +44,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                 <input type="number" id="wbgs_modal_stock_alert"><br><br>
 
                 <label><?php esc_html_e('End Date/Time', 'smart-countdown-scarcity'); ?></label><br>
-                <input type="datetime-local" id="wbgs_modal_end_time"><br><br>
+                <input type="datetime-local" id="wbgs_modal_end_time" step="1"><br><br>
 
                 <label><?php esc_html_e('Banner Image', 'smart-countdown-scarcity'); ?></label><br>
                 <input type="hidden" id="wbgs_modal_banner" name="wbgs_modal_banner">
@@ -94,7 +94,8 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                     $end_time = isset($alert_data['end_time']) ? $alert_data['end_time'] : '';
 
                     if ( ! empty( $end_time ) ) {
-                        $formatted_date = date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $end_time );
+                        $date_format = get_option( 'date_format' );
+                        $formatted_date = date_i18n( $date_format . ' H:i:s', $end_time );
                     }
 
                     $banner_image = isset($alert_data['banner_image']) ? $alert_data['banner_image'] : '';
