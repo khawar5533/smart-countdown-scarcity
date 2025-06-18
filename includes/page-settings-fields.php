@@ -98,7 +98,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                         $formatted_date = date_i18n( $date_format . ' H:i:s', $end_time );
                     }
 
-                    $banner_image = isset($alert_data['banner_image']) ? $alert_data['banner_image'] : '';
+                    $banner_image = isset($alert_data['banner_image']) && !empty($alert_data['banner_image']) ? $alert_data['banner_image'] : plugin_dir_url(dirname(__FILE__)) . 'assets/images/default-banner.jpg';
                     $status = isset($alert_data['status']) ? $alert_data['status'] : '';
                     ?>
                 <tr>
