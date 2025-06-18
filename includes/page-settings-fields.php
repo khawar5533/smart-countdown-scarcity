@@ -172,32 +172,30 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
     }
     //update the product statius
     public function wbgs_edit_product_status() {
-        // Security check (optional but recommended)
-        $product_id = intval($_POST['product_id']);
-        $selected_value = sanitize_text_field($_POST['selected_value']);
+        $selected_id = intval($_POST['selected_product_id']);
+        $all_ids = isset($_POST['all_product_ids']) ? $_POST['all_product_ids'] : [];
 
-        // Validate input
-        if ($product_id && in_array($selected_value, ['enable', 'disable'])) {
-            // Construct the correct option key
+        if (!is_array($all_ids)) {
+            wp_send_json_error('Invalid product IDs');
+            return;
+        }
+
+        foreach ($all_ids as $id) {
+            $product_id = intval($id);
+            if ($product_id <= 0) continue;
+
+            $status = ($product_id === $selected_id) ? 'enable' : 'disable';
             $option_key = 'wbgs_product_' . $product_id . '_data';
 
-            // Get current option value (serialized array)
             $option_data = get_option($option_key);
 
             if (is_array($option_data)) {
-                // Update just the status
-                $option_data['status'] = $selected_value;
-
-                // Save it back
+                $option_data['status'] = $status;
                 update_option($option_key, $option_data);
-
-                wp_send_json_success('Status updated to ' . $selected_value);
-            } else {
-                wp_send_json_error('Product data not found');
             }
-        } else {
-            wp_send_json_error('Invalid data');
         }
+
+        wp_send_json_success('All statuses updated successfully.');
     }
 
     public function wbgs_render_custom_option_page() {
