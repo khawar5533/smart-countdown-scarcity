@@ -3,8 +3,9 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
     class WBGS_SmartCountdownScarcitySetting {
         public function __construct() {
             add_action('admin_menu', [ $this, 'wbgs_add_settings_menu' ]);
+            add_action('admin_menu', [ $this, 'wbgs_add_submenu_page' ]);
             add_action('wp_ajax_wbgs_edit_product_status', [$this, 'wbgs_edit_product_status']); 
-           add_action('wp_ajax_wbgs_save_product_settings', [$this, 'wbgs_save_product_settings']);
+            add_action('wp_ajax_wbgs_save_product_settings', [$this, 'wbgs_save_product_settings']);
         }
     // For setting menu
         public function wbgs_add_settings_menu() {
@@ -16,6 +17,16 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                 [ $this, 'wbgs_render_settings_page' ], // Callback
                 'dashicons-clock',                 // Icon
                 56
+            );
+        }
+        public function wbgs_add_submenu_page() {
+            add_submenu_page(
+                'wbgs_settings',                          // Parent slug
+                'Custom Settings',                     // Page title
+                'Custom Option',                          // Submenu title
+                'manage_options',                         // Capability
+                'wbgs_custom_option',                     // Menu slug
+                [ $this, 'wbgs_render_custom_option_page' ] // Callback
             );
         }
     // For Register setting
@@ -188,6 +199,38 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
             wp_send_json_error('Invalid data');
         }
     }
+
+    public function wbgs_render_custom_option_page() {
+    ?>
+    <div class="wrap">
+        <h1><?php esc_html_e('Custom Option Setting', 'smart-countdown-scarcity'); ?></h1>
+        <?php if (isset($_POST['wbgs_custom_option_text'])) : 
+            check_admin_referer('wbgs_custom_option_save');
+            $custom_text = sanitize_text_field($_POST['wbgs_custom_option_text']);
+            update_option('wbgs_custom_option_text', $custom_text);
+            echo '<div class="updated"><p>Saved successfully.</p></div>';
+        endif;
+
+        $saved_value = get_option('wbgs_custom_option_text', '');
+        ?>
+        <form method="post">
+            <?php wp_nonce_field('wbgs_custom_option_save'); ?>
+            <table class="form-table">
+                <tr>
+                    <th scope="row">
+                        <label for="wbgs_custom_option_text"><?php esc_html_e('Section Heading', 'smart-countdown-scarcity'); ?></label>
+                    </th>
+                    <td>
+                        <input type="text" name="wbgs_custom_option_text" id="wbgs_custom_option_text" value="<?php echo esc_attr($saved_value); ?>" class="regular-text" />
+                    </td>
+                </tr>
+            </table>
+            <?php submit_button(__('Save', 'smart-countdown-scarcity')); ?>
+        </form>
+    </div>
+    <?php
+}
+
 
 
  }

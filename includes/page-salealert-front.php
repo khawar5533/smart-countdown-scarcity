@@ -27,6 +27,8 @@ if (!class_exists('WBGS_SmartCountdownFront')) {
             }
             // Sort by product ID
             ksort($combine_data_front);
+            $heading = get_option('wbgs_custom_option_text');
+            $heading = !empty($heading) ? $heading : '';
             if(isset($combine_data_front) && !empty($combine_data_front)){
               foreach($combine_data_front as $key => $front_data){
                 $status_front = isset($front_data['status']) ? $front_data['status'] : '';
@@ -46,7 +48,7 @@ if (!class_exists('WBGS_SmartCountdownFront')) {
                       <a href="<?php echo get_the_permalink($product_id_front);?>" target="_blank">
                         <div class="wbgs_banner_container" style="background-image: url('<?php echo esc_url($banner_image); ?>'); background-size: cover; background-position: center; height: 300px;">
                         <div class="countdown-box">
-                            <h3 class="countdown-title"><?php echo esc_html_e('Remaing Stock Items :', 'smart-countdown-scarcity'); ?> <?php echo esc_html_e('Sale Alert', 'smart-countdown-scarcity'); ?> </h3>
+                            <h3 class="countdown-title"><?php echo esc_attr($heading); ?> </h3>
                             <h4><?php echo $product_title;?></h4>
                             <p><?php echo esc_html_e('Remaing Stock Items :', 'smart-countdown-scarcity'); ?> <?php echo esc_attr($stock_alert);?></p>
                             <p><?php echo esc_html_e('Sale Price :', 'smart-countdown-scarcity'); ?> <?php echo esc_attr($sale_price);?></p>
