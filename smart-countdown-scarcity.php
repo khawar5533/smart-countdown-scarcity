@@ -26,6 +26,7 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
         public function __construct() {
            //load script and css files
             add_action('admin_enqueue_scripts',[$this,'wbgs_enqueue_admin_scripts']);
+            add_action('wp_enqueue_scripts', [$this, 'wbgs_enqueue_frontend_styles']);
             // Check dependencies when all plugins are loaded
             add_action('plugins_loaded', [$this, 'wbgs_check_woocommerce_dependency']);
         }
@@ -62,6 +63,7 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
         public function wbgs_woocommerce_missing_notice() {
             echo '<div class="notice notice-error is-dismissible"><p><strong>Smart Countdown Scarcity</strong> requires WooCommerce to be installed and active.</p></div>';
         }
+        //include the css using js and css for admin side
         public function wbgs_enqueue_admin_scripts() {
 
             // Enqueue media uploader
@@ -86,8 +88,17 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
                 null // version (you can specify a version if needed)
             );
         
- 
-}
+        
+        }
+  //include the css using js and css for front side
+        public function wbgs_enqueue_frontend_styles() {
+            wp_enqueue_style(
+                'wbgs-frontend-css',
+                plugin_dir_url(__FILE__) . 'assets/css/wbgs-frontend.css',
+                [],
+                null // You can specify a version like '1.0.0'
+            );
+        }
     }
 
     // Instantiate the class

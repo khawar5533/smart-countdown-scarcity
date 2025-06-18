@@ -46,14 +46,23 @@ if (!class_exists('WBGS_SmartCountdownFront')) {
                     $banner_image = isset($front_data['banner_image']) && !empty($front_data['banner_image']) ? $front_data['banner_image'] : '';
                       ?>
                       <a href="<?php echo get_the_permalink($product_id_front);?>" target="_blank">
-                        <div class="wbgs_banner_container" style="background-image: url('<?php echo esc_url($banner_image); ?>'); background-size: cover; background-position: center; height: 300px;">
-                        <div class="countdown-box">
-                            <h3 class="countdown-title"><?php echo esc_attr($heading); ?> </h3>
+                        <div class="wbgs_banner_container" style="background-image: url('<?php //echo esc_url($banner_image); ?>'); background-size: cover; background-position: center; height: 300px;">
+                         <!-- Left: Product Info -->    
+                          <!-- <div class="wbgs_banner_inner"> -->
+                        <div class="wbgs_banner_inner">
+                                  <h3 class="countdown-title"><?php echo esc_attr($heading); ?> </h3>
                             <h4><?php echo $product_title;?></h4>
                             <p><?php echo esc_html_e('Remaing Stock Items :', 'smart-countdown-scarcity'); ?> <?php echo esc_attr($stock_alert);?></p>
                             <p><?php echo esc_html_e('Sale Price :', 'smart-countdown-scarcity'); ?> <?php echo esc_attr($sale_price);?></p>
+                            </div>
+                             <!-- Center: Countdown -->
+                        <div class="wbgs_banner_center">
                             <div id="wbgacountdown" class="wbgacountdown"></div>
                         </div>
+                        <!-- Right: Product Image -->
+                         <div class="wbgs_banner_right">
+                            <img src="<?php echo esc_url($banner_image); ?>" alt="<?php echo $product_title;?>" />
+                         </div>
                     </div>
                 </a>
                   <script>

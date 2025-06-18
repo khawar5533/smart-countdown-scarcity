@@ -1,0 +1,70 @@
+.wbgs_banner_container {
+    background-color: #f8f8f8;
+    height: 300px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/* .wbgs_banner_inner {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    box-sizing: border-box;
+} */
+.wbgs_banner_inner h3,h4{
+    margin: 0px;
+}
+.wbgs_banner_inner p{
+    margin: 0px;
+}
+.wbgs_banner_left, .wbgs_banner_center, .wbgs_banner_right {
+    flex: 1;
+    padding: 10px;
+}
+
+.wbgs_banner_left {
+    text-align: left;
+}
+
+.wbgs_banner_center {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #d32f2f;
+}
+
+.wbgs_banner_right {
+    text-align: right;
+}
+
+.wbgs_banner_right img {
+    max-width: 100%;
+    max-height: 260px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.countdown-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.product-title {
+    font-size: 18px;
+    margin-top: 5px;
+    color: #34495e;
+}
+
+.stock-info, .sale-price {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+}
