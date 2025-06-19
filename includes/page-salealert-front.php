@@ -50,13 +50,14 @@ if (!class_exists('WBGS_SmartCountdownFront')) {
                          <!-- Left: Product Info -->    
                           <!-- <div class="wbgs_banner_inner"> -->
                         <div class="wbgs_banner_inner">
-                                  <h3 class="countdown-title"><?php echo esc_attr($heading); ?> </h3>
-                            <h4><?php echo $product_title;?></h4>
-                            <p><?php echo esc_html_e('Remaing Stock Items :', 'smart-countdown-scarcity'); ?> <?php echo esc_attr($stock_alert);?></p>
-                            <p><?php echo esc_html_e('Sale Price :', 'smart-countdown-scarcity'); ?> <?php echo esc_attr($sale_price);?></p>
-                            </div>
+                            <h3 class="countdown-title"><?php echo esc_attr($heading); ?> </h3>
+                            <h4 class="product-title"><?php echo $product_title;?></h4>
+                            <p class="stock-info"><?php echo esc_html_e('Remaing Stock Items :', 'smart-countdown-scarcity'); ?> <?php echo esc_attr($stock_alert);?></p>
+                            <p class="sale-price"><?php echo esc_html_e('Sale Price :', 'smart-countdown-scarcity'); ?> <?php echo esc_attr($sale_price);?></p>
+                          </div>
                              <!-- Center: Countdown -->
                         <div class="wbgs_banner_center">
+                          <div class="wbgs_promo_banner"><h3><span class="wbgs_highlight"><?php echo esc_html_e('UP TO', 'smart-countdown-scarcity'); ?></span> <strong><?php echo esc_html_e('60% OFF', 'smart-countdown-scarcity'); ?></strong></h3></div>
                             <div id="wbgacountdown" class="wbgacountdown"></div>
                         </div>
                         <!-- Right: Product Image -->
@@ -83,7 +84,10 @@ if (!class_exists('WBGS_SmartCountdownFront')) {
                             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                            countdownEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                            countdownEl.innerHTML = `<div class="time-block"><div class="value">${days}</div><div class="label">Days</div></div> 
+                           <div class="time-block"><div class="value">${hours}</div><div class="label">Hour</div></div>
+                            <div class="time-block"><div class="value">${minutes}</div><div class="label">Minutes</div></div>
+                            <div class="time-block"><div class="value">${seconds}</div><div class="label">Seconds</div></div>`;
                         }, 1000);
                     }
 
