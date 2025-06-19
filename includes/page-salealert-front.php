@@ -46,9 +46,8 @@ if (!class_exists('WBGS_SmartCountdownFront')) {
                     $banner_image = isset($front_data['banner_image']) && !empty($front_data['banner_image']) ? $front_data['banner_image'] : '';
                       ?>
                       <a href="<?php echo get_the_permalink($product_id_front);?>" target="_blank">
-                        <div class="wbgs_banner_container" style="background-image: url('<?php //echo esc_url($banner_image); ?>'); background-size: cover; background-position: center; height: 300px;">
+                        <div class="wbgs_banner_container" style="background-image: url(''); background-size: cover; background-position: center; height: 300px;">
                          <!-- Left: Product Info -->    
-                          <!-- <div class="wbgs_banner_inner"> -->
                         <div class="wbgs_banner_inner">
                             <h3 class="countdown-title"><?php echo esc_attr($heading); ?> </h3>
                             <h4 class="product-title"><?php echo $product_title;?></h4>
