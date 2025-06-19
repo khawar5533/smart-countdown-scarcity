@@ -120,7 +120,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                         name="choice" 
                         value="<?php echo esc_attr( $status ); ?>" 
                         data-product-id="<?php echo esc_attr( $product_id ); ?>" <?php echo ( isset($alert_data['status']) && $alert_data['status'] === 'enable' ) ? 'checked' : ''; ?>>
-                        
+                        <span class="wbgs-checkmark"></span>
                     </td>
                     <td><?php echo esc_attr(get_the_title( $product_id  ));?></td>
                     <td><?php echo esc_attr($stock_alert); ?></td>
