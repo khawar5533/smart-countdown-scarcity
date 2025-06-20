@@ -1,15 +1,14 @@
 <?php
 /**
  * Plugin Name:       Smart Countdown Scarcity
- * Plugin URI:        https://example.com/my-plugin
- * Description:       Support WooCommerce product
+ * Plugin URI:        https://www.webbuggs.com/
+ * Description:       Display time-limited, product-specific sale banners on WooCommerce product page, showing discount details and countdown timers only during active sale periods to boost urgency and drive conversions.
  * Version:           1.0.0
- * Author:            webbuggs
- * Author URI:        https://example.com
- * License:           GPL-2.0-or-later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Requires at least: 6.8
+ * Author:            Webbuggs
+ * Author URI:        https://www.webbuggs.com/
  * Text Domain:       smart-countdown-scarcity
- * Domain Path:       /languages
+ * License:           GPLv2 or later
  */
 
 defined('ABSPATH') || exit;
