@@ -34,3 +34,10 @@ td {
     input[type="radio"]:checked + .wbgs-checkmark::before {
       content: "✔";
     }
+
+    #wbgs_loadingDiv{
+      display:none;
+      color: green;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }

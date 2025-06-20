@@ -85,6 +85,9 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
          ?>
          <div class="wbgs_products_detail">
             <h3><?php esc_html_e('Product Sale Alert', 'smart-countdown-scarcity'); ?></h3>
+            <div id="wbgs_loadingDiv">
+                <?php echo esc_html( 'Loading, please wait...' ); ?>
+            </div>
          <table id="wbgs_products_table"  cellpadding="8" cellspacing="0" border="1">
             <thead>
                <tr>

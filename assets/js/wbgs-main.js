@@ -105,10 +105,13 @@ $(document).on('change', 'input[name="choice"]', function () {
     var $selected = $(this);
     var selectedProductId = $selected.data('product-id');
 
-    // Get all product IDs
     var allProductIds = $('input[name="choice"]').map(function () {
         return $(this).data('product-id');
     }).get();
+
+    var loadingTimeout = setTimeout(function () {
+        $('#wbgs_loadingDiv').show();
+    }, 300);
 
     $.ajax({
         url: wbgs_data.ajaxurl,
@@ -120,12 +123,19 @@ $(document).on('change', 'input[name="choice"]', function () {
         },
         success: function (response) {
             console.log('Statuses updated:', response);
-            $('#wbgs_products_table').load(location.href + ' #wbgs_products_table > *');
+            clearTimeout(loadingTimeout);
+
+            // Reload the table with a callback to hide loading AFTER load completes
+            $('#wbgs_products_table').load(location.href + ' #wbgs_products_table > *', function () {
+                $('#wbgs_loadingDiv').hide();
+            });
         },
         error: function (xhr, status, error) {
             console.error('AJAX error:', error);
+            clearTimeout(loadingTimeout);
+            $('#wbgs_loadingDiv').hide();
         }
     });
-});
+  });
 
 });
