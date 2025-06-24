@@ -50,6 +50,14 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                     }
                     ?>
                 </select><br><br>
+                <label><?php esc_html_e('Select Template', 'smart-countdown-scarcity'); ?></label><br>
+                <select id="wbgs_template_select" name="wbgs_template_select">
+                    <option value=""><?php esc_html_e('-- Please choose a template --', 'smart-countdown-scarcity'); ?></option>
+                    <option value="<?php echo esc_attr('template_1'); ?>"><?php esc_html_e('Template 1', 'smart-countdown-scarcity'); ?></option>
+                    <option value="<?php echo esc_attr('template_2' ); ?>"><?php esc_html_e('Template 2', 'smart-countdown-scarcity'); ?></option>
+                    <option value="<?php echo esc_attr('template_3' ); ?>"><?php esc_html_e('Template 3', 'smart-countdown-scarcity'); ?></option>
+                    <option value="<?php echo esc_attr('template_4' ); ?>"><?php esc_html_e('Template 3', 'smart-countdown-scarcity'); ?></option>
+                </select><br><br>
 
                 <label><?php esc_html_e('Stock Alert', 'smart-countdown-scarcity'); ?></label><br>
                 <input type="number" id="wbgs_modal_stock_alert"><br><br>
@@ -139,9 +147,9 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
             </div>
         <?php
      }
-        //Save product settings
-     public function wbgs_save_product_settings() {
-      
+    //Save product settings
+    public function wbgs_save_product_settings() {
+
         if (!current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'Permission denied']);
         }
@@ -150,29 +158,27 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
             wp_send_json_error(['message' => 'Invalid nonce']);
         }
 
-        $product_id = absint($_POST['product_id']);
-
-        if (!$product_id || get_post_type($product_id) !== 'product') {
-            wp_send_json_error(['message' => 'Invalid product']);
-        }
-    // Check if data for this product already exists
-        $existing_data = get_option("wbgs_product_{$product_id}_data");
-        if (!empty($existing_data)) {
-            wp_send_json_error(['message' => 'Settings for this product already exist.']);
+        $product_id = absint($_POST['product_id'] ?? 0);
+        if (!$product_id) {
+            wp_send_json_error(['message' => 'Invalid product ID']);
         }
 
         $data = [
-            'id' => $product_id,
-            'stock_alert'  => sanitize_text_field($_POST['stock_alert']),
-            'end_time'     => sanitize_text_field(strtotime($_POST['end_time'])),
-            'banner_image' => esc_url_raw($_POST['banner_image']),
-            'wbgs_ajax_nonce' => sanitize_text_field($_POST['wbgs_ajax_nonce']),
-            'status' => 'disable'
+            'stock_alert'     => sanitize_text_field($_POST['stock_alert'] ?? ''),
+            'end_time'        => strtotime(sanitize_text_field($_POST['end_time'] ?? '')),
+            'banner_image'    => esc_url_raw($_POST['banner_image'] ?? ''),
+            'template'        => sanitize_text_field($_POST['template'] ?? '')
         ];
 
-        update_option("wbgs_product_{$product_id}_data", $data);
+        $result = wbgs_save_product_data($product_id, $data);
+
+        if (is_wp_error($result)) {
+            wp_send_json_error(['message' => $result->get_error_message()]);
+        }
+
         wp_send_json_success(['message' => 'Product settings saved successfully.']);
     }
+
     //update the product statius
     public function wbgs_edit_product_status() {
         $selected_id = intval($_POST['selected_product_id']);

@@ -49,6 +49,7 @@ $('#wbgs_save_modal').on('click', function(e) {
             stock_alert: $('#wbgs_modal_stock_alert').val(),
             end_time: dateOnly,
             banner_image: $('#wbgs_modal_banner').val(),
+            template: $('#wbgs_template_select').val(),
             disable:'disable',
             wbgs_ajax_nonce: wbgs_data.nonce || false
         };
@@ -70,6 +71,7 @@ $('#wbgs_save_modal').on('click', function(e) {
                 $('#wbgs_modal_stock_alert').val('');
                 $('#wbgs_modal_end_time').val('');
                 $('#wbgs_modal_banner').val('');
+                $('#wbgs_template_select').val('');
                 $('#wbgs_banner_preview').empty();
 
                 messageTimer = setTimeout(function() {
@@ -82,12 +84,13 @@ $('#wbgs_save_modal').on('click', function(e) {
                 .removeClass('notice-success')
                 .text((response.data && response.data.message) || 'Unknown error')
                 .fadeIn();
-            // Clear inputs after success
-            $('#wbgs_modal_product_id').val('');
-            $('#wbgs_modal_stock_alert').val('');
-            $('#wbgs_modal_end_time').val('');
-            $('#wbgs_modal_banner').val('');
-            $('#wbgs_banner_preview').empty();
+                // Clear inputs after success
+                $('#wbgs_modal_product_id').val('');
+                $('#wbgs_modal_stock_alert').val('');
+                $('#wbgs_modal_end_time').val('');
+                $('#wbgs_modal_banner').val('');
+                $('#wbgs_template_select').val('');
+                $('#wbgs_banner_preview').empty();
             messageTimer = setTimeout(function() {
                 $('#wbgs_message').fadeOut();
             }, 10000);

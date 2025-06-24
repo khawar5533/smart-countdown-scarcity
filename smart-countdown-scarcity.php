@@ -108,5 +108,6 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
 
 require_once plugin_dir_path(__FILE__) . 'includes/page-settings-fields.php';
 require_once plugin_dir_path(__FILE__) . 'includes/page-salealert-front.php';
+require_once plugin_dir_path(__FILE__) . 'helper/wbgs-utils.php';
 
 
