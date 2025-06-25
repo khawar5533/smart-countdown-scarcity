@@ -1,5 +1,6 @@
 <?php
 //Helper functions
+// Render the banner templates
 if (!function_exists('wbgs_render_template')) {
 function wbgs_render_template($template_key, $data) {
     // Optional: Convert underscores to hyphens if you standardized filenames with hyphens
@@ -34,7 +35,7 @@ function wbgs_render_template($template_key, $data) {
     return strtr($template, $replacements);
  }
 }
-
+// save the banner template
 if (!function_exists('wbgs_save_product_data')) {
    function wbgs_save_product_data($product_id, $data) {
     if (!$product_id || get_post_type($product_id) !== 'product') {
