@@ -32,7 +32,7 @@ function wbgs_render_template($template_key, $data) {
     ];
 
     return strtr($template, $replacements);
-}
+ }
 }
 
 if (!function_exists('wbgs_save_product_data')) {
@@ -63,7 +63,7 @@ if (!function_exists('wbgs_save_product_data')) {
 
     update_option("wbgs_product_{$product_id}_data", $data);
     return true;
-}
+ }
 
 }
 
