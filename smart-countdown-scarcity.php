@@ -12,7 +12,6 @@
  */
 
 defined('ABSPATH') || exit;
-
 // Activation hook to set a one-time flag
 register_activation_hook(__FILE__, 'wbgs_plugin_activate');
 function wbgs_plugin_activate() {
@@ -96,6 +95,14 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
                 plugin_dir_url(__FILE__) . 'assets/css/wbgs-frontend.css',
                 [],
                 null // You can specify a version like '1.0.0'
+            );
+            // Enqueue JS
+            wp_enqueue_script(
+                'wbgs-frontend-js', // Handle
+                plugin_dir_url(__FILE__) . 'assets/js/wbgs-frontend.js', // Path to your JS file
+                ['jquery'], // Dependencies, e.g. jQuery, or [] if none
+                null, // Version number (null for no version)
+                true // Load in footer (true recommended for better performance)
             );
         }
     }

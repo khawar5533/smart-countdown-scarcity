@@ -142,3 +142,4 @@ $(document).on('change', 'input[name="choice"]', function () {
   });
 
 });
+

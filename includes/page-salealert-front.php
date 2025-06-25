@@ -5,41 +5,37 @@ if (!class_exists('WBGS_SmartCountdownFront')) {
           add_action('woocommerce_before_main_content', [$this,'wbgs_woocommerce_shop_sale_alert'], 5,0);
         }
         //show sale alert on shop page
-        public function wbgs_woocommerce_shop_sale_alert() {
-          $combine_data_front = [];
+       public function wbgs_woocommerce_shop_sale_alert() {
+            $combine_data_front = [];
 
-          $args = array(
-              'post_type'      => 'product',
-              'post_status'    => 'publish',
-              'posts_per_page' => -1,
-              'fields'         => 'ids',
-          );
+            $args = array(
+                'post_type'      => 'product',
+                'post_status'    => 'publish',
+                'posts_per_page' => -1,
+                'fields'         => 'ids',
+            );
 
-          $product_ids = get_posts($args);
+            $product_ids = get_posts($args);
 
-          foreach ($product_ids as $product_id) {
-              $product_data_front = get_option("wbgs_product_{$product_id}_data");
-              if (is_array($product_data_front)) {
-                  $combine_data_front[$product_id] = $product_data_front;
-              }
-          }
+            foreach ($product_ids as $product_id) {
+                $product_data_front = get_option("wbgs_product_{$product_id}_data");
+                if (is_array($product_data_front)) {
+                    $combine_data_front[$product_id] = $product_data_front;
+                }
+            }
 
-          // Sort by product ID
-          ksort($combine_data_front);
+            ksort($combine_data_front);
 
-          foreach ($combine_data_front as $key => $front) {
-              $data_id        = !empty($front['id']) ? $front['id'] : '';
-              $status         = !empty($front['status']) ? $front['status'] : '';
-              $rendered_html  = !empty($front['rendered_html']) ? $front['rendered_html'] : '';
-             
+            foreach ($combine_data_front as $key => $front) {
+                $status        = !empty($front['status']) ? $front['status'] : '';
+                $template_file = !empty($front['template_file']) ? $front['template_file'] : '';
+                $template_key  = basename($template_file, '.php');
 
-              if (!empty($status) && $status === 'enable' && !empty($rendered_html)) {
-                  // Safe display of trusted HTML (generated internally)
-                   echo $rendered_html;
-
-              }
-          }
-      }
+                if ($status === 'enable' && !empty($template_key) && function_exists('wbgs_render_template')) {
+                    echo wbgs_render_template($template_key, $front);
+                }
+            }
+        }
 
     }
     new WBGS_SmartCountdownFront();

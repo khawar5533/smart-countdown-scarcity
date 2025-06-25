@@ -56,7 +56,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                     <option value="<?php echo esc_attr('template_1'); ?>"><?php esc_html_e('Template 1', 'smart-countdown-scarcity'); ?></option>
                     <option value="<?php echo esc_attr('template_2' ); ?>"><?php esc_html_e('Template 2', 'smart-countdown-scarcity'); ?></option>
                     <option value="<?php echo esc_attr('template_3' ); ?>"><?php esc_html_e('Template 3', 'smart-countdown-scarcity'); ?></option>
-                    <option value="<?php echo esc_attr('template_4' ); ?>"><?php esc_html_e('Template 3', 'smart-countdown-scarcity'); ?></option>
+                    <option value="<?php echo esc_attr('template_4' ); ?>"><?php esc_html_e('Template 4', 'smart-countdown-scarcity'); ?></option>
                 </select><br><br>
 
                 <label><?php esc_html_e('Stock Alert', 'smart-countdown-scarcity'); ?></label><br>
