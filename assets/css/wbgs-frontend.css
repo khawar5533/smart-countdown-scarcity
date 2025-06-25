@@ -104,4 +104,40 @@
     font-size: 16px;
     color: #555;
 }
+/* second template */
+.wbgacountdown_2 {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
 
+.time-block {
+    text-align: center;
+}
+
+.circle {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #f7f9fc;
+    border: 3px solid #007bff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.label {
+    font-size: 13px;
+    color: #555;
+    margin-top: 4px;
+}

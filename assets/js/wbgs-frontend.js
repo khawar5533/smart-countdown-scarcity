@@ -34,3 +34,52 @@ document.addEventListener("DOMContentLoaded", function () {
     const interval = setInterval(updateCountdown, 1000);
   });
 });
+
+// js code for template two
+function startCountdown(element, targetDate) {
+    const interval = setInterval(() => {
+        const now = Date.now();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+            clearInterval(interval);
+            element.innerHTML = "EXPIRED";
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        element.innerHTML = `
+            <div class="time-block"><div class="circle"><div class="value">${days}</div><div class="label">Days</div></div></div>
+            <div class="time-block"><div class="circle"><div class="value">${hours}</div><div class="label">Hours</div></div></div>
+            <div class="time-block"><div class="circle"><div class="value">${minutes}</div><div class="label">Minutes</div></div></div>
+            <div class="time-block"><div class="circle"><div class="value">${seconds}</div><div class="label">Seconds</div></div></div>`;
+    }, 1000);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const countdownElements = document.querySelectorAll(".wbgacountdown_2");
+
+    countdownElements.forEach(el => {
+        let timestamp = el.getAttribute("data-timestamp");
+        if (timestamp) {
+            let targetDate = parseInt(timestamp, 10);
+
+            // Convert from seconds to milliseconds if needed
+            if (targetDate < 1000000000000) {
+                targetDate *= 1000;
+            }
+
+            if (!isNaN(targetDate)) {
+                startCountdown(el, targetDate);
+            } else {
+                el.innerHTML = "Invalid date";
+            }
+        } else {
+            el.innerHTML = "Missing timestamp";
+        }
+    });
+});
