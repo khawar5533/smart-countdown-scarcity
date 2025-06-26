@@ -104,6 +104,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                 <th><?php echo esc_html( 'Stock Alert' ); ?></th>
                 <th><?php echo esc_html( 'Duration' ); ?></th>
                 <th><?php echo esc_html( 'Banner' ); ?></th>
+                <th><?php echo esc_html( 'Template' ); ?></th>
                 <th><?php echo esc_html( 'Status' ); ?></th>
             </tr>
             </thead>
@@ -114,6 +115,27 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                     $product_id = isset($alert_data['id']) ? $alert_data['id'] : '';
                     $stock_alert = isset($alert_data['stock_alert']) ? $alert_data['stock_alert'] : '';
                     $end_time = isset($alert_data['end_time']) ? $alert_data['end_time'] : '';
+
+                    if (isset($alert_data['template'])) {
+                        switch ($alert_data['template']) {
+                            case 'template_1':
+                                $template_name = 'First Template';
+                                break;
+                            case 'template_2':
+                                $template_name = 'Second Template';
+                                break;
+                            case 'template_3':
+                                $template_name = 'Third Template';
+                                break;
+                            case 'template_4':
+                                $template_name = 'Fourth Template';
+                                break;
+                            default:
+                                $template_name = 'Not Assigned Template';
+                                break;
+                        }
+                    }
+
 
                     if ( ! empty( $end_time ) ) {
                         $date_format = get_option( 'date_format' );
@@ -137,6 +159,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                     <td><?php echo esc_attr($stock_alert); ?></td>
                     <td><?php echo esc_attr($formatted_date);?></td>
                     <td><img src="<?php echo esc_url($banner_image) ;?>" alt="Banner Image" width="50" height="25"></td>
+                    <td><?php echo esc_attr($template_name);?></td>
                     <td><?php echo esc_attr($status);?></td>
                 </tr> 
                 <?php }}else{ ?>
