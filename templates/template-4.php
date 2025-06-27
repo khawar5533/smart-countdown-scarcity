@@ -1,5 +1,4 @@
-     <h2>{{title}}</h2>
-      <div class="wbgs_banner_inner">
+     <div class="wbgs_banner_inner">
         <h3>{{custom_text}}</h3>
         <h4 class="product-title">{{title}}</h4>
         <p class="sale-price">Sale Price: {{sale_price}}</p>
