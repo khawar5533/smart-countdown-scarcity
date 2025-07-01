@@ -55,6 +55,11 @@ if (!function_exists('wbgs_save_and_register_product_data')) {
             $data['template_file'] = str_replace('_', '-', $data['template']) . '.php';
         }
 
+        $existing = get_option("wbgs_product_{$product_id}_data");
+            if (!empty($existing)) {
+                return new WP_Error('duplicate', 'Settings for this product already exist.');
+         }
+         
         // Populate fields used by render_template
         $data['title']         = get_the_title($product_id);
         $data['permalink']     = get_permalink($product_id);
