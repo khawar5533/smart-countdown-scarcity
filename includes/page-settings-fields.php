@@ -163,7 +163,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                     <td><?php echo esc_attr($status);?></td>
                 </tr> 
                 <?php }}else{ ?>
-                    <tr><td colspan="6" style="text-align: center;"><?php esc_html_e('Not Recored Found', 'smart-countdown-scarcity'); ?></td></tr>
+                    <tr><td colspan="7" style="text-align: center;"><?php esc_html_e('Not Recored Found', 'smart-countdown-scarcity'); ?></td></tr>
                 <?php } ?>
             </tbody>
             </table>
@@ -172,35 +172,41 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
      }
     //Save product settings
     public function wbgs_save_product_settings() {
-
-        if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => 'Permission denied']);
-        }
-
-        if (!isset($_POST['wbgs_ajax_nonce']) || !wp_verify_nonce($_POST['wbgs_ajax_nonce'], 'wbgs_nonce')) {
-            wp_send_json_error(['message' => 'Invalid nonce']);
-        }
-
-        $product_id = absint($_POST['product_id'] ?? 0);
-        if (!$product_id) {
-            wp_send_json_error(['message' => 'Invalid product ID']);
-        }
-
-        $data = [
-            'stock_alert'     => sanitize_text_field($_POST['stock_alert'] ?? ''),
-            'end_time'        => strtotime(sanitize_text_field($_POST['end_time'] ?? '')),
-            'banner_image'    => esc_url_raw($_POST['banner_image'] ?? ''),
-            'template'        => sanitize_text_field($_POST['template'] ?? '')
-        ];
-
-        $result = wbgs_save_product_data($product_id, $data);
-
-        if (is_wp_error($result)) {
-            wp_send_json_error(['message' => $result->get_error_message()]);
-        }
-
-        wp_send_json_success(['message' => 'Product settings saved successfully.']);
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error(['message' => 'Permission denied']);
     }
+
+    if (!isset($_POST['wbgs_ajax_nonce']) || !wp_verify_nonce($_POST['wbgs_ajax_nonce'], 'wbgs_nonce')) {
+        wp_send_json_error(['message' => 'Invalid nonce']);
+    }
+
+    $product_id = absint($_POST['product_id'] ?? 0);
+    if (!$product_id) {
+        wp_send_json_error(['message' => 'Invalid product ID']);
+    }
+
+    $data = [
+        'stock_alert'     => sanitize_text_field($_POST['stock_alert'] ?? ''),
+        'end_time'        => strtotime(sanitize_text_field($_POST['end_time'] ?? '')),
+        'banner_image'    => esc_url_raw($_POST['banner_image'] ?? ''),
+        'template'        => sanitize_text_field($_POST['template'] ?? '')
+    ];
+
+    // Call the unified function
+    $result = wbgs_save_and_register_product_data($product_id, $data);
+
+    if (is_wp_error($result)) {
+        wp_send_json_error(['message' => $result->get_error_message()]);
+    }
+
+    $shortcode = '[wbgs_product_' . $product_id . ']';
+
+    wp_send_json_success([
+        'message' => 'Product settings saved successfully.',
+        'shortcode' => $shortcode
+    ]);
+}
+
 
     //update the product statius
     public function wbgs_edit_product_status() {
