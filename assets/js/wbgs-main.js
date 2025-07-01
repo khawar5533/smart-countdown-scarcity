@@ -38,71 +38,69 @@
     });
 
 // add or update hidden values using ajax
+
 $('#wbgs_save_modal').on('click', function(e) {
-        e.preventDefault();
-       let datetime = $('#wbgs_modal_end_time').val();
-       let dateOnly = datetime.replace('T', ' ');
-       $('#wbgs_modal_end_time').val(datetime);
-        const data = {
-            action: 'wbgs_save_product_settings',
-            product_id: $('#wbgs_modal_product_id').val(),
-            stock_alert: $('#wbgs_modal_stock_alert').val(),
-            end_time: dateOnly,
-            banner_image: $('#wbgs_modal_banner').val(),
-            template: $('#wbgs_template_select').val(),
-            disable:'disable',
-            wbgs_ajax_nonce: wbgs_data.nonce || false
-        };
-        $.ajax({
-            url: wbgs_data.ajaxurl,
-            type: 'POST',
-            data: data,
-            dataType: 'json',
-            success: function(response) {
-                if (response.success === true) {
-                $('#wbgs_message').addClass('notice-success')
-                .css('display','block')
-                .removeClass('notice-error')
-                .text(response.data.message)
+    e.preventDefault();
+
+    let datetime = $('#wbgs_modal_end_time').val();
+    let dateOnly = datetime.replace('T', ' ');
+    $('#wbgs_modal_end_time').val(datetime); // Still storing original
+
+    const data = {
+        action: 'wbgs_save_product_settings',
+        product_id: $('#wbgs_modal_product_id').val(),
+        stock_alert: $('#wbgs_modal_stock_alert').val(),
+        end_time: dateOnly,
+        banner_image: $('#wbgs_modal_banner').val(),
+        template: $('#wbgs_template_select').val(),
+        disable: 'disable',
+        wbgs_ajax_nonce: wbgs_data.nonce || false
+    };
+
+    $.ajax({
+        url: wbgs_data.ajaxurl,
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function(response) {
+            let $message = $('#wbgs_message');
+            let isSuccess = response.success === true;
+            let msgText = (response.data && response.data.message) || 'Unknown response';
+
+            // Append shortcode if available
+            if (isSuccess && response.data.shortcode) {
+                msgText += `<br><strong>Shortcode:</strong> <code>${response.data.shortcode}</code>`;
+            }
+
+            $message
+                .removeClass('notice-error notice-success')
+                .addClass(isSuccess ? 'notice-success' : 'notice-error')
+                .html(msgText)
                 .fadeIn();
 
-                // Clear inputs after success
-                $('#wbgs_modal_product_id').val('');
-                $('#wbgs_modal_stock_alert').val('');
-                $('#wbgs_modal_end_time').val('');
-                $('#wbgs_modal_banner').val('');
-                $('#wbgs_template_select').val('');
-                $('#wbgs_banner_preview').empty();
+            // Clear fields
+            $('#wbgs_modal_product_id').val('');
+            $('#wbgs_modal_stock_alert').val('');
+            $('#wbgs_modal_end_time').val('');
+            $('#wbgs_modal_banner').val('');
+            $('#wbgs_template_select').val('');
+            $('#wbgs_banner_preview').empty();
 
-                messageTimer = setTimeout(function() {
-                    $('#wbgs_message').fadeOut();
-                }, 10000);
-                 $('#wbgs_products_table').load(location.href + ' #wbgs_products_table > *');
-                } else {
-                $('#wbgs_message')
-                .addClass('notice-error')
-                .removeClass('notice-success')
-                .text((response.data && response.data.message) || 'Unknown error')
-                .fadeIn();
-                // Clear inputs after success
-                $('#wbgs_modal_product_id').val('');
-                $('#wbgs_modal_stock_alert').val('');
-                $('#wbgs_modal_end_time').val('');
-                $('#wbgs_modal_banner').val('');
-                $('#wbgs_template_select').val('');
-                $('#wbgs_banner_preview').empty();
-            messageTimer = setTimeout(function() {
-                $('#wbgs_message').fadeOut();
+            // Reload the table
+            $('#wbgs_products_table').load(location.href + ' #wbgs_products_table > *');
+
+            // Auto-hide message
+            clearTimeout(window.messageTimer);
+            window.messageTimer = setTimeout(function() {
+                $message.fadeOut();
             }, 10000);
-
-             $('#wbgs_products_table').load(location.href + ' #wbgs_products_table > *');
-            }
-            },
-            error: function(xhr, status, error) {
-                alert('AJAX Error: ' + error);
-            }
-        });
+        },
+        error: function(xhr, status, error) {
+            alert('AJAX Error: ' + error);
+        }
     });
+});
+
 //Update radio button status
 $(document).on('change', 'input[name="choice"]', function () {
     var $selected = $(this);
