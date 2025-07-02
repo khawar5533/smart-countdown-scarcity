@@ -81,9 +81,8 @@ if (!function_exists('wbgs_save_and_register_product_data')) {
 add_action('init', 'wbgs_register_all_product_shortcodes', 10);
 
 if (!function_exists('wbgs_register_all_product_shortcodes')) {
-
-    function wbgs_register_all_product_shortcodes() {
-       
+  function wbgs_register_all_product_shortcodes() {
+    
         $args = [
             'post_type'      => 'product',
             'post_status'    => 'publish',
@@ -95,16 +94,26 @@ if (!function_exists('wbgs_register_all_product_shortcodes')) {
 
         foreach ($product_ids as $product_id) {
             $data = get_option("wbgs_product_{$product_id}_data");
+
             if (!empty($data) && !empty($data['template'])) {
                 $shortcode_tag = 'wbgs_product_' . $product_id;
 
-                // Use a unique function for each closure using $product_id
-                add_shortcode($shortcode_tag, function () use ($data) {
+                add_shortcode($shortcode_tag, function () use ($product_id, $data) {
                     if (!function_exists('wbgs_render_template')) {
                         return '<div class="wbgs-template-fallback">Template renderer not found.</div>';
                     }
 
-                    return wbgs_render_template($data['template'], $data);
+                    // Get the most recent data from DB
+                    $live_data = get_option("wbgs_product_{$product_id}_data");
+                    $status = isset($live_data['status']) ? $live_data['status'] : 'disable';
+
+                    // Skip rendering if status is "enable" (reserved for top banner only)
+                    if ($status === 'enable') {
+                        return ''; // prevent rendering elsewhere
+                    }
+
+                    // Render for "disabled" products freely
+                    return wbgs_render_template($live_data['template'], $live_data);
                 });
             }
         }
