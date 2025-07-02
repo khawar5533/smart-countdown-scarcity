@@ -41,7 +41,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                 <h2><?php esc_html_e('Add Product Settings', 'smart-countdown-scarcity'); ?></h2>
 
                 <label><?php esc_html_e('Select Product', 'smart-countdown-scarcity'); ?></label><br>
-                <select id="wbgs_modal_product_id">
+                <select id="wbgs_modal_product_id" name="wbgs_product_id">
                     <option value=""><?php esc_html_e('-- Select --', 'smart-countdown-scarcity'); ?></option>
                     <?php
                     $products = get_posts(['post_type' => 'product', 'numberposts' => -1]);
@@ -60,10 +60,10 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                 </select><br><br>
 
                 <label><?php esc_html_e('Stock Alert', 'smart-countdown-scarcity'); ?></label><br>
-                <input type="number" id="wbgs_modal_stock_alert"><br><br>
+                <input type="number" id="wbgs_modal_stock_alert" name="stock_alert"><br><br>
 
                 <label><?php esc_html_e('End Date/Time', 'smart-countdown-scarcity'); ?></label><br>
-                <input type="datetime-local" id="wbgs_modal_end_time" step="1"><br><br>
+                <input type="datetime-local" id="wbgs_modal_end_time" name="end_time" step="1"><br><br>
 
                 <label><?php esc_html_e('Banner Image', 'smart-countdown-scarcity'); ?></label><br>
                 <input type="hidden" id="wbgs_modal_banner" name="wbgs_modal_banner">
@@ -71,6 +71,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                 <div id="wbgs_banner_preview" style="margin-top:10px;"></div><br>
             </div>
              <button class="button button-primary" id="wbgs_save_modal"><?php esc_html_e('Save Settings', 'smart-countdown-scarcity'); ?></button>
+             <input type="hidden" id="wbgs_edit_id" name="wbgs_edit_id" value="">
             </form>
         </div> 
         <?php
@@ -99,14 +100,15 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
          <table id="wbgs_products_table"  cellpadding="8" cellspacing="0" border="1">
             <thead>
                <tr>
-                <th><?php echo esc_html( 'Action' ); ?></th>
+                <th><?php echo esc_html( 'Top Banner' ); ?></th>
                 <th><?php echo esc_html( 'Name' ); ?></th>
                 <th><?php echo esc_html( 'Stock Alert' ); ?></th>
                 <th><?php echo esc_html( 'Duration' ); ?></th>
                 <th><?php echo esc_html( 'Banner' ); ?></th>
                 <th><?php echo esc_html( 'Template' ); ?></th>
                 <th><?php echo esc_html( 'ShortCode' ); ?></th>
-                <th><?php echo esc_html( 'Top Banner' ); ?></th>
+                <th><?php echo esc_html( 'Status' ); ?></th> 
+                <th><?php echo esc_html( 'Action' ); ?></th>
             </tr>
             </thead>
             <tbody>
@@ -140,7 +142,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
 
                     if ( ! empty( $end_time ) ) {
                         $date_format = get_option( 'date_format' );
-                        $formatted_date = date_i18n( $date_format . ' H:i:s', $end_time );
+                        $formatted_date = date_i18n( $date_format . ' h:i:s A', $end_time );
                     }
 
                     $banner_image = isset($alert_data['banner_image']) && !empty($alert_data['banner_image']) ? $alert_data['banner_image'] : plugin_dir_url(dirname(__FILE__)) . 'assets/images/default-banner.jpg';
@@ -164,6 +166,12 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                     <td><?php echo esc_attr($template_name);?></td>
                     <td><code>[wbgs_product_<?php echo esc_attr($product_id); ?>]</code></td>
                     <td><?php echo esc_attr($status);?></td>
+                    <td class="wbgs-edit-icon">
+                        <a href="#" class="wbgs-edit-button" data-product_id ="<?php echo esc_attr($product_id);?>"
+                        data-template="<?php echo esc_attr($alert_data['template']);?>" data-stock="<?php echo esc_attr($stock_alert); ?>" data-end_time="<?php echo esc_attr($end_time );?>" data-banner="<?php echo esc_url($banner_image) ;?>"  id="wbgs-editbox-<?php echo esc_attr($product_id);?>" value="">
+                            <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/images/edit.png'; ?>" alt="Edit" style="width:16px; height:16px;">
+                        </a>
+                    </td>
                 </tr> 
                 <?php }}else{ ?>
                     <tr><td colspan="8" style="text-align: center;"><?php esc_html_e('Not Recored Found', 'smart-countdown-scarcity'); ?></td></tr>
@@ -175,40 +183,48 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
      }
     //Save product settings
     public function wbgs_save_product_settings() {
-    if (!current_user_can('manage_options')) {
-        wp_send_json_error(['message' => 'Permission denied']);
+        $alert_message = '';
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'Permission denied']);
+        }
+
+        if (!isset($_POST['wbgs_ajax_nonce']) || !wp_verify_nonce($_POST['wbgs_ajax_nonce'], 'wbgs_nonce')) {
+            wp_send_json_error(['message' => 'Invalid nonce']);
+        }
+
+        $product_id = absint($_POST['product_id'] ?? 0);
+        if (!$product_id) {
+            wp_send_json_error(['message' => 'Invalid product ID']);
+        }
+
+        $data = [
+            'stock_alert'     => sanitize_text_field($_POST['stock_alert'] ?? ''),
+            'end_time'        => strtotime(sanitize_text_field($_POST['end_time'] ?? '')),
+            'banner_image'    => esc_url_raw($_POST['banner_image'] ?? ''),
+            'template'        => sanitize_text_field($_POST['template'] ?? '')
+        ];
+
+        if(isset($_POST['edit_id']) && !empty($_POST['edit_id'])){
+           $data['edit_id'] = sanitize_text_field($_POST['edit_id'] ?? '');
+        }
+        // Call the unified function
+        $result = wbgs_save_and_register_product_data($product_id, $data);
+
+        if (is_wp_error($result)) {
+            wp_send_json_error(['message' => $result->get_error_message()]);
+        }
+
+        $shortcode = '[wbgs_product_' . $product_id . ']';
+        if(!empty($data['edit_id'])){
+            $alert_message = "Product settings update successfully.";
+        }else{
+           $alert_message = "Product settings saved successfully.";
+        }
+        wp_send_json_success([
+            'message' => $alert_message,
+            'shortcode' => $shortcode
+        ]);
     }
-
-    if (!isset($_POST['wbgs_ajax_nonce']) || !wp_verify_nonce($_POST['wbgs_ajax_nonce'], 'wbgs_nonce')) {
-        wp_send_json_error(['message' => 'Invalid nonce']);
-    }
-
-    $product_id = absint($_POST['product_id'] ?? 0);
-    if (!$product_id) {
-        wp_send_json_error(['message' => 'Invalid product ID']);
-    }
-
-    $data = [
-        'stock_alert'     => sanitize_text_field($_POST['stock_alert'] ?? ''),
-        'end_time'        => strtotime(sanitize_text_field($_POST['end_time'] ?? '')),
-        'banner_image'    => esc_url_raw($_POST['banner_image'] ?? ''),
-        'template'        => sanitize_text_field($_POST['template'] ?? '')
-    ];
-
-    // Call the unified function
-    $result = wbgs_save_and_register_product_data($product_id, $data);
-
-    if (is_wp_error($result)) {
-        wp_send_json_error(['message' => $result->get_error_message()]);
-    }
-
-    $shortcode = '[wbgs_product_' . $product_id . ']';
-
-    wp_send_json_success([
-        'message' => 'Product settings saved successfully.',
-        'shortcode' => $shortcode
-    ]);
-}
 
 
     //update the product statius
