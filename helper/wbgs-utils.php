@@ -34,33 +34,40 @@ if (!function_exists('wbgs_render_template')) {
 }
 // save the banner template
 if (!function_exists('wbgs_save_and_register_product_data')) {
-    function wbgs_save_and_register_product_data($product_id, $data) {
+   function wbgs_save_and_register_product_data($product_id, $data) {
         if (!$product_id || get_post_type($product_id) !== 'product') {
             return new WP_Error('invalid_product', 'Invalid product.');
         }
 
-        // Allow saving or overwriting existing data
         $product = wc_get_product($product_id);
         if (!$product) {
             return new WP_Error('invalid_product', 'WooCommerce product not found.');
         }
 
+        $is_editing = !empty($data['edit_id']);
+        $option_key = "wbgs_product_{$product_id}_data";
+        $existing   = get_option($option_key);
+
+        // Prevent duplicate insert
+        if (!$is_editing && !empty($existing)) {
+            return new WP_Error('duplicate', 'Settings for this product already exist.');
+        }
+
+        // In edit mode, preserve the current status
+        if ($is_editing && !empty($existing['status'])) {
+            $data['status'] = $existing['status'];
+        } else {
+            $data['status'] = 'disable'; // default for new
+        }
+
         $data['id']        = $product_id;
-        $data['status']    = 'disable'; // Default status
         $data['shortcode'] = 'wbgs_product_' . $product_id;
 
-        // Save template name (raw)
         if (!empty($data['template'])) {
             $data['template'] = sanitize_text_field($data['template']);
             $data['template_file'] = str_replace('_', '-', $data['template']) . '.php';
         }
 
-        $existing = get_option("wbgs_product_{$product_id}_data");
-            if (!empty($existing)) {
-                return new WP_Error('duplicate', 'Settings for this product already exist.');
-         }
-         
-        // Populate fields used by render_template
         $data['title']         = get_the_title($product_id);
         $data['permalink']     = get_permalink($product_id);
         $data['sale_price']    = $product->get_sale_price();
@@ -70,12 +77,11 @@ if (!function_exists('wbgs_save_and_register_product_data')) {
         $data['end_time']      = isset($data['end_time']) ? intval($data['end_time']) : 0;
         $data['banner_image']  = isset($data['banner_image']) ? esc_url_raw($data['banner_image']) : '';
 
-        // Save the product alert settings
-        update_option("wbgs_product_{$product_id}_data", $data);
-
-
+        update_option($option_key, $data);
         return true;
-    }
+}
+
+
 }
 // Hook into WordPress 'init' to register dynamic shortcodes for all products
 add_action('init', 'wbgs_register_all_product_shortcodes', 10);

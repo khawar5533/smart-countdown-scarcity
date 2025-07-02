@@ -38,13 +38,15 @@
     });
 
 // add or update hidden values using ajax
-
 $('#wbgs_save_modal').on('click', function(e) {
     e.preventDefault();
 
     let datetime = $('#wbgs_modal_end_time').val();
     let dateOnly = datetime.replace('T', ' ');
-    $('#wbgs_modal_end_time').val(datetime); // Still storing original
+    $('#wbgs_modal_end_time').val(datetime); // Preserve original
+
+    const editId = $('#wbgs_edit_id').val()?.trim();
+    const isEditing = editId !== '' && editId !== '0';
 
     const data = {
         action: 'wbgs_save_product_settings',
@@ -54,6 +56,7 @@ $('#wbgs_save_modal').on('click', function(e) {
         banner_image: $('#wbgs_modal_banner').val(),
         template: $('#wbgs_template_select').val(),
         disable: 'disable',
+        edit_id: editId,
         wbgs_ajax_nonce: wbgs_data.nonce || false
     };
 
@@ -67,7 +70,6 @@ $('#wbgs_save_modal').on('click', function(e) {
             let isSuccess = response.success === true;
             let msgText = (response.data && response.data.message) || 'Unknown response';
 
-            // Append shortcode if available
             if (isSuccess && response.data.shortcode) {
                 msgText += `<br><strong>Shortcode:</strong> <code>${response.data.shortcode}</code>`;
             }
@@ -78,28 +80,66 @@ $('#wbgs_save_modal').on('click', function(e) {
                 .html(msgText)
                 .fadeIn();
 
-            // Clear fields
-            $('#wbgs_modal_product_id').val('');
-            $('#wbgs_modal_stock_alert').val('');
-            $('#wbgs_modal_end_time').val('');
-            $('#wbgs_modal_banner').val('');
-            $('#wbgs_template_select').val('');
-            $('#wbgs_banner_preview').empty();
-
-            // Reload the table
-            $('#wbgs_products_table').load(location.href + ' #wbgs_products_table > *');
-
-            // Auto-hide message
             clearTimeout(window.messageTimer);
-            window.messageTimer = setTimeout(function() {
+            window.messageTimer = setTimeout(() => {
                 $message.fadeOut();
             }, 10000);
+
+            if (isEditing) {
+                location.reload();
+            } else {
+                $('#wbgs_modal_product_id').val('');
+                $('#wbgs_modal_stock_alert').val('');
+                $('#wbgs_modal_end_time').val('');
+                $('#wbgs_modal_banner').val('');
+                $('#wbgs_template_select').val('');
+                $('#wbgs_banner_preview').empty();
+
+                $('#wbgs_products_table').load(location.href + ' #wbgs_products_table > *');
+            }
         },
         error: function(xhr, status, error) {
             alert('AJAX Error: ' + error);
         }
     });
 });
+
+// Update banner recored
+$('.wbgs-edit-button').on('click', function(e) {
+    e.preventDefault();
+
+    let $btn = $(this);
+    let timestamp = parseInt($btn.data('end_time'));
+    let formattedDate = '';
+
+    if (!isNaN(timestamp)) {
+        let date = new Date(timestamp * 1000); // Convert to milliseconds
+        let year = date.getUTCFullYear();
+        let month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+        let day = ('0' + date.getUTCDate()).slice(-2);
+        let hours = ('0' + date.getUTCHours()).slice(-2);       // ✅ 24-hour format
+        let minutes = ('0' + date.getUTCMinutes()).slice(-2);
+        let seconds = ('0' + date.getUTCSeconds()).slice(-2);
+
+        formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+    }
+
+    // Populate form fields
+    $('#wbgs_edit_id').val($btn.data('product_id'));
+    $('#wbgs_modal_product_id').val($btn.data('product_id')).prop('disabled', true); // Disable select
+    $('#wbgs_template_select').val($btn.data('template'));
+    $('#wbgs_modal_stock_alert').val($btn.data('stock'));
+    $('#wbgs_modal_end_time').val(formattedDate);
+    $('#wbgs_modal_banner').val($btn.data('banner'));
+
+    let bannerUrl = $btn.data('banner');
+    if (bannerUrl) {
+        $('#wbgs_banner_preview').html('<img src="' + bannerUrl + '" style="max-width: 100px;">');
+    } else {
+        $('#wbgs_banner_preview').empty();
+    }
+});
+
 
 //Update radio button status
 $(document).on('change', 'input[name="choice"]', function () {
