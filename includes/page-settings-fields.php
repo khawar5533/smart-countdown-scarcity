@@ -105,7 +105,8 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                 <th><?php echo esc_html( 'Duration' ); ?></th>
                 <th><?php echo esc_html( 'Banner' ); ?></th>
                 <th><?php echo esc_html( 'Template' ); ?></th>
-                <th><?php echo esc_html( 'Status' ); ?></th>
+                <th><?php echo esc_html( 'ShortCode' ); ?></th>
+                <th><?php echo esc_html( 'Top Banner' ); ?></th>
             </tr>
             </thead>
             <tbody>
@@ -144,6 +145,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
 
                     $banner_image = isset($alert_data['banner_image']) && !empty($alert_data['banner_image']) ? $alert_data['banner_image'] : plugin_dir_url(dirname(__FILE__)) . 'assets/images/default-banner.jpg';
                     $status = isset($alert_data['status']) ? $alert_data['status'] : '';
+                    $shortcode = isset($alert_data['shortcode']) ? $alert_data['shortcode'] : '';
                     ?>
                 <tr>
                     <td>
@@ -160,10 +162,11 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                     <td><?php echo esc_attr($formatted_date);?></td>
                     <td><img src="<?php echo esc_url($banner_image) ;?>" alt="Banner Image" width="50" height="25"></td>
                     <td><?php echo esc_attr($template_name);?></td>
+                    <td><code>[wbgs_product_<?php echo esc_attr($product_id); ?>]</code></td>
                     <td><?php echo esc_attr($status);?></td>
                 </tr> 
                 <?php }}else{ ?>
-                    <tr><td colspan="7" style="text-align: center;"><?php esc_html_e('Not Recored Found', 'smart-countdown-scarcity'); ?></td></tr>
+                    <tr><td colspan="8" style="text-align: center;"><?php esc_html_e('Not Recored Found', 'smart-countdown-scarcity'); ?></td></tr>
                 <?php } ?>
             </tbody>
             </table>

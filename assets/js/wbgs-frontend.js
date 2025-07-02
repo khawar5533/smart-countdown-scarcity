@@ -1,17 +1,23 @@
 // count down finction 
 document.addEventListener("DOMContentLoaded", function () {
-  // Select all countdown elements
   const countdownElements = document.querySelectorAll(".wbgacountdown");
 
-  countdownElements.forEach(function(countdownEl) {
-    // Read the end time from data attribute (assumed to be UNIX timestamp in seconds)
+  countdownElements.forEach(function (countdownEl, index) {
+    // Generate random number for unique class (can also use Date.now() + index)
+    const randomNum = Math.floor(Math.random() * 100000);
+    const uniqueClass = `wbgacountdown-${randomNum}`;
+
+    // Add the unique class to the element
+    countdownEl.classList.add("dunsmic", uniqueClass);
+
+    // Read the end time from the data attribute
     const endTime = parseInt(countdownEl.dataset.endTime, 10) * 1000;
 
     function updateCountdown() {
-      const now = new Date().getTime();
+      const now = Date.now();
       const distance = endTime - now;
 
-      if (distance < 0) {
+      if (distance <= 0) {
         countdownEl.innerHTML = "EXPIRED";
         clearInterval(interval);
         return;
@@ -35,8 +41,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+
 // js code for template two
-function startCountdown(element, targetDate) {
+function wbgs_startCountdown(element, targetDate) {
     const interval = setInterval(() => {
         const now = Date.now();
         const distance = targetDate - now;
@@ -61,20 +68,26 @@ function startCountdown(element, targetDate) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const countdownElements = document.querySelectorAll(".wbgacountdown_2");
+    const countdownElements = document.querySelectorAll(".wbgs-sale-counter");
 
-    countdownElements.forEach(el => {
+    countdownElements.forEach((el, index) => {
         let timestamp = el.getAttribute("data-timestamp");
+
+        // Generate a unique class using a random number
+        const randomId = Math.floor(Math.random() * 100000);
+        const dynamicClass = `wbgs-sale-counter-${randomId}`;
+        el.classList.add("dunsmic", dynamicClass);
+
         if (timestamp) {
             let targetDate = parseInt(timestamp, 10);
 
-            // Convert from seconds to milliseconds if needed
+            // Convert from seconds to milliseconds if it's likely in seconds
             if (targetDate < 1000000000000) {
                 targetDate *= 1000;
             }
 
             if (!isNaN(targetDate)) {
-                startCountdown(el, targetDate);
+                wbgs_startCountdown(el, targetDate);
             } else {
                 el.innerHTML = "Invalid date";
             }
@@ -83,3 +96,4 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
