@@ -106,7 +106,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                 <th><?php echo esc_html( 'Banner' ); ?></th>
                 <th><?php echo esc_html( 'Template' ); ?></th>
                 <th><?php echo esc_html( 'ShortCode' ); ?></th>
-                <th><?php echo esc_html( 'Status' ); ?></th>
+                <th><?php echo esc_html( 'Top Banner' ); ?></th>
             </tr>
             </thead>
             <tbody>
