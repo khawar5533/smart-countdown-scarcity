@@ -59,6 +59,15 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                     <option value="<?php echo esc_attr('template_4' ); ?>"><?php esc_html_e('Template 4', 'smart-countdown-scarcity'); ?></option>
                 </select><br><br>
 
+                <label for="wbgs_item_title"><?php esc_html_e('Title', 'smart-countdown-scarcity'); ?></label><br>
+                <input type="text" id="wbgs_item_title" name="wbgs_item_title" style="width:100%;"><br><br>
+
+                <label for="wbgs_item_subtitle"><?php esc_html_e('Sub Title', 'smart-countdown-scarcity'); ?></label><br>
+                <input type="text" id="wbgs_item_subtitle" name="wbgs_item_subtitle" style="width:100%;"><br><br>
+
+                <label for="wbgs_item_description"><?php esc_html_e('Description', 'smart-countdown-scarcity'); ?></label><br>
+                <textarea id="wbgs_item_description" name="wbgs_item_description" rows="4" style="width:100%;"></textarea><br><br>
+
                 <label><?php esc_html_e('Stock Alert', 'smart-countdown-scarcity'); ?></label><br>
                 <input type="number" id="wbgs_modal_stock_alert" name="stock_alert"><br><br>
 
@@ -118,6 +127,9 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                     $product_id = isset($alert_data['id']) ? $alert_data['id'] : '';
                     $stock_alert = isset($alert_data['stock_alert']) ? $alert_data['stock_alert'] : '';
                     $end_time = isset($alert_data['end_time']) ? $alert_data['end_time'] : '';
+                    $title = isset($alert_data['title']) ? $alert_data['title'] : '';
+                    $subtitle = isset($alert_data['subtitle']) ? $alert_data['subtitle'] : '';
+                    $description = isset($alert_data['description']) ? $alert_data['description'] : '';
 
                     if (isset($alert_data['template'])) {
                         switch ($alert_data['template']) {
@@ -168,7 +180,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                     <td><?php echo esc_attr($status);?></td>
                     <td class="wbgs-edit-icon">
                         <a href="#" class="wbgs-edit-button" data-product_id ="<?php echo esc_attr($product_id);?>"
-                        data-template="<?php echo esc_attr($alert_data['template']);?>" data-stock="<?php echo esc_attr($stock_alert); ?>" data-end_time="<?php echo esc_attr($end_time );?>" data-banner="<?php echo esc_url($banner_image) ;?>"  id="wbgs-editbox-<?php echo esc_attr($product_id);?>" value="">
+                        data-template="<?php echo esc_attr($alert_data['template']);?>" data-title="<?php echo esc_attr($title);?>" data-subtitle="<?php echo esc_attr($subtitle );?>" data-description="<?php echo esc_attr($description);?>" data-stock="<?php echo esc_attr($stock_alert); ?>" data-end_time="<?php echo esc_attr($end_time );?>" data-banner="<?php echo esc_url($banner_image) ;?>"  id="wbgs-editbox-<?php echo esc_attr($product_id);?>" value="">
                             <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/images/edit.png'; ?>" alt="Edit" style="width:16px; height:16px;">
                         </a>
                     </td>
@@ -198,6 +210,9 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
         }
 
         $data = [
+            'title' => sanitize_text_field($_POST['title'] ?? ''),
+            'subtitle' => sanitize_text_field($_POST['subtitle'] ?? ''),
+            'description' => sanitize_text_field($_POST['description'] ?? ''),
             'stock_alert'     => sanitize_text_field($_POST['stock_alert'] ?? ''),
             'end_time'        => strtotime(sanitize_text_field($_POST['end_time'] ?? '')),
             'banner_image'    => esc_url_raw($_POST['banner_image'] ?? ''),

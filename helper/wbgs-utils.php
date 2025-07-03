@@ -18,13 +18,15 @@ if (!function_exists('wbgs_render_template')) {
 
         $replacements = [
             '{{title}}'        => esc_html($data['title'] ?? ''),
-            '{{permalink}}'    => esc_url($data['permalink'] ?? ''),
+            '{{subtitle}}'        => esc_html($data['subtitle'] ?? ''),
+            '{{description}}'        => esc_html($data['description'] ?? ''),
             '{{sale_price}}'   => esc_html($data['sale_price'] ?? ''),
             '{{stock}}'        => intval($data['stock_alert'] ?? 0),
             '{{image_url}}'    => esc_url($data['banner_image'] ?? ''),
             '{{custom_text}}'  => esc_html($data['custom_text'] ?? ''),
             '{{end_time}}'     => intval($data['end_time'] ?? 0),
             '{{countdown_id}}' => esc_attr($data['countdown_id'] ?? ''),
+            '{{shop now}}' => esc_attr('SHOP NOW'),
         ];
 
         return strtr($template, $replacements);
@@ -68,15 +70,15 @@ if (!function_exists('wbgs_save_and_register_product_data')) {
             $data['template_file'] = str_replace('_', '-', $data['template']) . '.php';
         }
 
-        $data['title']         = get_the_title($product_id);
-        $data['permalink']     = get_permalink($product_id);
+        $data['title']         = isset($data['title']) ? esc_attr($data['title']) : '';
+        $data['subtitle']         = isset($data['subtitle']) ? esc_attr($data['subtitle']) : '';
+        $data['description']         = isset($data['description']) ? esc_attr($data['description']) : '';
         $data['sale_price']    = $product->get_sale_price();
         $data['custom_text']   = get_option('wbgs_custom_option_text');
         $data['countdown_id']  = 'wbgs_countdown_' . $product_id;
         $data['stock_alert']   = isset($data['stock_alert']) ? intval($data['stock_alert']) : 0;
         $data['end_time']      = isset($data['end_time']) ? intval($data['end_time']) : 0;
         $data['banner_image']  = isset($data['banner_image']) ? esc_url_raw($data['banner_image']) : '';
-
         update_option($option_key, $data);
         return true;
 }

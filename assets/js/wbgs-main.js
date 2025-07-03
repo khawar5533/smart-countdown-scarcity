@@ -51,6 +51,9 @@ $('#wbgs_save_modal').on('click', function(e) {
     const data = {
         action: 'wbgs_save_product_settings',
         product_id: $('#wbgs_modal_product_id').val(),
+        title: $('#wbgs_item_title').val(),
+        subtitle: $('#wbgs_item_subtitle').val(),
+        description: $('#wbgs_item_description').val(),
         stock_alert: $('#wbgs_modal_stock_alert').val(),
         end_time: dateOnly,
         banner_image: $('#wbgs_modal_banner').val(),
@@ -93,6 +96,9 @@ $('#wbgs_save_modal').on('click', function(e) {
                 $('#wbgs_modal_end_time').val('');
                 $('#wbgs_modal_banner').val('');
                 $('#wbgs_template_select').val('');
+                $('#wbgs_item_title').val('');
+                $('#wbgs_item_subtitle').val('');
+                $('#wbgs_item_description').val('');
                 $('#wbgs_banner_preview').empty();
 
                 $('#wbgs_products_table').load(location.href + ' #wbgs_products_table > *');
@@ -131,6 +137,9 @@ $('.wbgs-edit-button').on('click', function(e) {
     $('#wbgs_modal_stock_alert').val($btn.data('stock'));
     $('#wbgs_modal_end_time').val(formattedDate);
     $('#wbgs_modal_banner').val($btn.data('banner'));
+    $('#wbgs_item_title').val($btn.data('title'));
+    $('#wbgs_item_subtitle ').val($btn.data('subtitle'));
+    $('#wbgs_item_description').val($btn.data('description'));
 
     let bannerUrl = $btn.data('banner');
     if (bannerUrl) {
