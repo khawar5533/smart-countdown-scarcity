@@ -2,13 +2,12 @@
         <div class="glasses-sale-banner-container">
             <div class="glasses-brand-info">
                 <div class="glasses-ad-container">
-                    <h1 class="glasses-title">SHADE UP</h1>
-                    <h2 class="glasses-sub-title">stand out</h2>
-                    <p class="glasses-tagline">Protect your eyes in style with UV-blocking, trend</p>
-                    <button class="glasses-shop-button">SHOP NOW</button>
+                    <h1 class="glasses-title">{{title}}</h1>
+                    <h2 class="glasses-sub-title">{{subtitle}}</h2>
+                    <p class="glasses-tagline">{{description}}</p>
+                    <button class="glasses-shop-button" data-href="#">{{shop now}}</button>
                 </div>
             </div>
-
             <div class="glasses-offer-banner">
                 <div class="glasses-offer-text">
                     <div class="glasses-discount-line">
