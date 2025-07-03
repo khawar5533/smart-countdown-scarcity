@@ -1,143 +1,184 @@
-.wbgs_main_banner {
-    max-width: none !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-}
-.wbgs_banner_container {
-    background-color: #f8f8f8;
-    min-height: 300px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-}
-
-.wbgs_banner_inner {
-    width: 15%;
-    float: left;
-}
-.wbgs_banner_inner h3,h4{
-    margin: 0px;
-}
-.wbgs_banner_inner p{
-    margin: 0px;
-}
-
-.wbgs_banner_left {
-    text-align: left;
-}
-
-.wbgs_banner_center {
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: #d32f2f;
-    width: 50%;
-}
-
-.wbgacountdown {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.wbgacountdown .time-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* Custom Font: Sattanic */
+@font-face {
+    font-family: 'Sattanic';
+    src: url('../fonts/Sattanic-DEMO.ttf') format('truetype');
     font-weight: normal;
+    font-style: normal;
 }
 
-.wbgacountdown .value {
-    background-color: #fbe9e7;
-    color: #bf360c;
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-size: 28px;
-    min-width: 60px;
-    text-align: center;
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.wbgacountdown .label {
-    margin-top: 5px;
-    font-size: 14px;
-    color: #5d4037;
-}
-
-.wbgs_banner_right {
-    width: 15%;
-    float: right;
-    position: relative;
-    top: 3px;
-}
-
-.wbgs_banner_right img {
-    max-width: 100%;
-    max-height: 260px;
-    object-fit: contain;
-    border-radius: 8px;
-}
-
-.countdown-title {
-    font-size: 22px;
-    font-weight: bold;
-    color: #2c3e50;
-}
-
-
-.stock-info, .sale-price {
-    margin: 5px 0;
-    font-size: 16px;
-    color: #555;
-}
-.product-title {
-    font-size: 18px;
-    color: #34495e;
-    word-break: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
-}
-
-.stock-info,
-.sale-price {
-    font-size: 16px;
-    color: #555;
-}
-/* second template */
-.wbgs-sale-counter {
+/* Sale Banner */
+.glasses-sale-banner {
     display: flex;
-    gap: 15px;
-    justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
+    background-image: url('../images/glasses-bg.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    max-width: 100%;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
 }
 
-.time-block {
+/* Grid Layout */
+.glasses-sale-banner-container {
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    align-items: center;
+    padding: 90px 115px;
+}
+
+.glasses-brand-line {
+    display: flex;
+    align-items: flex-end;
+}
+
+h1.glasses-title {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 42px;
+    line-height: 1;
+}
+
+h2.glasses-sub-title {
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-size: 80px;
+    line-height: 1;
+    letter-spacing: -4px;
+}
+
+.glasses-model {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-size: 42px;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.glasses-tagline {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1;
+    text-transform: uppercase;
+    max-width: 300px;
+    margin-bottom: 24px;
+}
+
+.glasses-shop-button {
+    padding: 16px 32px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.glasses-shop-button:hover {
+    background-color: #2d3748;
+}
+
+.glasses-offer-banner {
     text-align: center;
 }
 
-.circle {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    background: #f7f9fc;
-    border: 3px solid #007bff;
+.glasses-upto {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 58px;
+    line-height: 1;
+    text-align: justify;
+    margin: 0;
+}
+
+.glasses-offer-text {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 10px;
+}
+
+.glasses-big-number {
+    color: #876100;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 100px;
+    line-height: 0.75;
+}
+
+.glasses-percent-off {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-left: 5px;
+    margin-bottom: 12px;
+    text-align: center;
+    line-height: 1.2;
 }
 
-.value {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
+.glasses-percent,
+.glasses-off {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1;
 }
 
-.label {
-    font-size: 13px;
-    color: #555;
-    margin-top: 4px;
+.glasses-countdown {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+}
+
+.glasses-time-box-min {
+    background-color: #CEB069;
+    color: white;
+    padding: 15px 10px;
+    border-radius: 20px;
+    width: 80px;
+    text-align: center;
+}
+
+.glasses-time {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 34px;
+    color: #2A2A2B;
+    display: block;
+}
+
+.glasses-label {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: 1px;
+    margin-top: 8px;
+    display: block;
+}
+
+.glasses-sale-image {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+}
+
+.glasses-sale-image img {
+    max-width: 350px;
+    object-fit: contain;
 }

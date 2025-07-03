@@ -96,6 +96,12 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
                 [],
                 null // You can specify a version like '1.0.0'
             );
+            wp_enqueue_style(
+                'wbgs-google-fonts',
+                'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap',
+                [],
+                null
+            );
             // Enqueue JS
             wp_enqueue_script(
                 'wbgs-frontend-js', // Handle

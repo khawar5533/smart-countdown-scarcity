@@ -29,10 +29,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       countdownEl.innerHTML = `
-        <div class="time-block"><div class="value">${days}</div><div class="label">Days</div></div> 
-        <div class="time-block"><div class="value">${hours}</div><div class="label">Hour</div></div>
-        <div class="time-block"><div class="value">${minutes}</div><div class="label">Minutes</div></div>
-        <div class="time-block"><div class="value">${seconds}</div><div class="label">Seconds</div></div>
+        <div class="glasses-time-box"><div class="glasses-time-box-min"><span class="glasses-time">${days}</span></div><div class="glasses-label">Days</div></div> 
+        <div class="glasses-time-box"><div class="glasses-time-box-min"><span class="glasses-time">${hours}</span></div><div class="glasses-label">Hour</div></div>
+        <div class="glasses-time-box"><div class="glasses-time-box-min"><span class="glasses-time">${minutes}</span></div><div class="glasses-label">Minutes</div></div>
+        <div class="glasses-time-box"><div class="glasses-time-box-min"><span class="glasses-time">${seconds}</span></div><div class="glasses-label">Seconds</div></div>
       `;
     }
 
