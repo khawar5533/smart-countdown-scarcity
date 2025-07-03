@@ -87,8 +87,8 @@ if (!function_exists('wbgs_save_and_register_product_data')) {
 add_action('init', 'wbgs_register_all_product_shortcodes', 10);
 
 if (!function_exists('wbgs_register_all_product_shortcodes')) {
-  function wbgs_register_all_product_shortcodes() {
-    
+    function wbgs_register_all_product_shortcodes() {
+
         $args = [
             'post_type'      => 'product',
             'post_status'    => 'publish',
@@ -104,21 +104,15 @@ if (!function_exists('wbgs_register_all_product_shortcodes')) {
             if (!empty($data) && !empty($data['template'])) {
                 $shortcode_tag = 'wbgs_product_' . $product_id;
 
-                add_shortcode($shortcode_tag, function () use ($product_id, $data) {
+                add_shortcode($shortcode_tag, function () use ($product_id) {
                     if (!function_exists('wbgs_render_template')) {
                         return '<div class="wbgs-template-fallback">Template renderer not found.</div>';
                     }
 
-                    // Get the most recent data from DB
+                    // Always get the latest data
                     $live_data = get_option("wbgs_product_{$product_id}_data");
-                    $status = isset($live_data['status']) ? $live_data['status'] : 'disable';
 
-                    // Skip rendering if status is "enable" (reserved for top banner only)
-                    if ($status === 'enable') {
-                        return ''; // prevent rendering elsewhere
-                    }
-
-                    // Render for "disabled" products freely
+                    // Render the template regardless of status
                     return wbgs_render_template($live_data['template'], $live_data);
                 });
             }
