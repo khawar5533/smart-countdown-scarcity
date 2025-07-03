@@ -1,20 +1,28 @@
-<div class="wbgs_main_banner">
-    <a href="{{permalink}}">
-  <div class="wbgs_banner_container">
-      <div class="wbgs_banner_inner">
-        <h3>{{custom_text}}</h3>
-        <h4 class="product-title">{{title}}</h4>
-        <p class="sale-price">Sale Price: {{sale_price}}</p>
-        <p class="stock-info">Stock Remaining: {{stock}}</p>
-      </div>
+<div class="glasses-sale-banner">
+        <div class="glasses-sale-banner-container">
+            <div class="glasses-brand-info">
+                <div class="glasses-ad-container">
+                    <h1 class="glasses-title">SHADE UP</h1>
+                    <h2 class="glasses-sub-title">stand out</h2>
+                    <p class="glasses-tagline">Protect your eyes in style with UV-blocking, trend</p>
+                    <button class="glasses-shop-button">SHOP NOW</button>
+                </div>
+            </div>
 
-      <div class="wbgs_banner_center">
-        <div id="{{countdown_id}}" class="wbgacountdown" data-end-time="{{end_time}}"></div>
-      </div>
-
-      <div class="wbgs_banner_right">
-        <img src="{{image_url}}" alt="{{title}}" width="50" height="25">
-      </div>
-  </div>
-  </a>
-</div>
+            <div class="glasses-offer-banner">
+                <div class="glasses-offer-text">
+                    <div class="glasses-discount-line">
+                        <span class="glasses-big-number">50</span>
+                    </div>
+                    <div class="glasses-percent-off">
+                        <span class="glasses-percent">%</span>
+                        <span class="glasses-off">OFF</span>
+                    </div>
+                </div>
+                   <div id="{{countdown_id}}" class="wbgacountdown glasses-countdown" data-end-time="{{end_time}}"></div> 
+                  </div>
+            </div>
+            <div class="glasses-sale-image">
+                <img src="{{image_url}}" alt="{{title}}">
+            </div>
+       </div>
