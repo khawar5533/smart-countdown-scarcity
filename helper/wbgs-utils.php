@@ -20,6 +20,9 @@ if (!function_exists('wbgs_render_template')) {
             '{{title}}'        => esc_html($data['title'] ?? ''),
             '{{subtitle}}'        => esc_html($data['subtitle'] ?? ''),
             '{{description}}'        => esc_html($data['description'] ?? ''),
+            '{{flashtitle}}'        => esc_html($data['flashsaletitle'] ?? ''),
+            '{{discounttitle}}'        => esc_html($data['discounttitle'] ?? ''),
+            '{{off}}'        => esc_html($data['discountoff'] ?? ''),
             '{{sale_price}}'   => esc_html($data['sale_price'] ?? ''),
             '{{stock}}'        => intval($data['stock_alert'] ?? 0),
             '{{image_url}}'    => esc_url($data['banner_image'] ?? ''),
@@ -27,6 +30,8 @@ if (!function_exists('wbgs_render_template')) {
             '{{end_time}}'     => intval($data['end_time'] ?? 0),
             '{{countdown_id}}' => esc_attr($data['countdown_id'] ?? ''),
             '{{shop now}}' => esc_attr('SHOP NOW'),
+             '{{url}}' => get_permalink($data['id']),
+            '{{percent}}' => esc_attr('%'),
         ];
 
         return strtr($template, $replacements);
@@ -73,6 +78,9 @@ if (!function_exists('wbgs_save_and_register_product_data')) {
         $data['title']         = isset($data['title']) ? esc_attr($data['title']) : '';
         $data['subtitle']         = isset($data['subtitle']) ? esc_attr($data['subtitle']) : '';
         $data['description']         = isset($data['description']) ? esc_attr($data['description']) : '';
+        $data['flashsaletitle']         = isset($data['flashsaletitle']) ? esc_attr($data['flashsaletitle']) : '';
+        $data['discounttitle']         = isset($data['discounttitle']) ? esc_attr($data['discounttitle']) : '';
+        $data['discountoff']         = isset($data['discountoff']) ? esc_attr($data['discountoff']) : '';
         $data['sale_price']    = $product->get_sale_price();
         $data['custom_text']   = get_option('wbgs_custom_option_text');
         $data['countdown_id']  = 'wbgs_countdown_' . $product_id;

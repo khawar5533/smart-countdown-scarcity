@@ -53,6 +53,9 @@ $('#wbgs_save_modal').on('click', function(e) {
         product_id: $('#wbgs_modal_product_id').val(),
         title: $('#wbgs_item_title').val(),
         subtitle: $('#wbgs_item_subtitle').val(),
+        flashsaletitle:$('#wbgs_sale_title').val(),
+        discounttitle:$('#wbgs_banner_discount').val(),
+        discountoff:$('#wbgs_banner_percent').val(),
         description: $('#wbgs_item_description').val(),
         stock_alert: $('#wbgs_modal_stock_alert').val(),
         end_time: dateOnly,
@@ -99,6 +102,9 @@ $('#wbgs_save_modal').on('click', function(e) {
                 $('#wbgs_item_title').val('');
                 $('#wbgs_item_subtitle').val('');
                 $('#wbgs_item_description').val('');
+                $('#wbgs_sale_title').val(''),
+                $('#wbgs_banner_discount').val(''),
+                $('#wbgs_banner_percent').val(''),
                 $('#wbgs_banner_preview').empty();
 
                 $('#wbgs_products_table').load(location.href + ' #wbgs_products_table > *');
@@ -140,6 +146,11 @@ $('.wbgs-edit-button').on('click', function(e) {
     $('#wbgs_item_title').val($btn.data('title'));
     $('#wbgs_item_subtitle ').val($btn.data('subtitle'));
     $('#wbgs_item_description').val($btn.data('description'));
+    $('#wbgs_banner_discount').val($btn.data('discounttitl'));
+    $('#wbgs_sale_title').val($btn.data('flashsale'));
+    $('#wbgs_banner_percent').val($btn.data('discounttxt'));
+    
+
 
     let bannerUrl = $btn.data('banner');
     if (bannerUrl) {
