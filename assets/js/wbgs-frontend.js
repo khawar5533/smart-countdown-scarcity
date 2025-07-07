@@ -1,11 +1,11 @@
 // count down finction 
 document.addEventListener("DOMContentLoaded", function () {
-  const countdownElements = document.querySelectorAll(".wbgacountdown");
+  const countdownElements = document.querySelectorAll(".wbgscountdown");
 
   countdownElements.forEach(function (countdownEl, index) {
     // Generate random number for unique class (can also use Date.now() + index)
     const randomNum = Math.floor(Math.random() * 100000);
-    const uniqueClass = `wbgacountdown-${randomNum}`;
+    const uniqueClass = `wbgscountdown-${randomNum}`;
 
     // Add the unique class to the element
     countdownEl.classList.add("dunsmic", uniqueClass);
@@ -29,10 +29,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       countdownEl.innerHTML = `
-        <div class="glasses-time-box"><div class="glasses-time-box-min"><span class="glasses-time">${days}</span></div><div class="glasses-label">Days</div></div> 
-        <div class="glasses-time-box"><div class="glasses-time-box-min"><span class="glasses-time">${hours}</span></div><div class="glasses-label">Hour</div></div>
-        <div class="glasses-time-box"><div class="glasses-time-box-min"><span class="glasses-time">${minutes}</span></div><div class="glasses-label">Minutes</div></div>
-        <div class="glasses-time-box"><div class="glasses-time-box-min"><span class="glasses-time">${seconds}</span></div><div class="glasses-label">Seconds</div></div>
+        <div class="wpgs-glasses-time-box"><div class="wpgs-glasses-time-box-min"><span class="wpgs-glasses-time">${days}</span></div><div class="wpgs-glasses-label">Days</div></div> 
+        <div class="wpgs-glasses-time-box"><div class="wpgs-glasses-time-box-min"><span class="wpgs-glasses-time">${hours}</span></div><div class="wpgs-glasses-label">Hour</div></div>
+        <div class="wpgs-glasses-time-box"><div class="wpgs-glasses-time-box-min"><span class="wpgs-glasses-time">${minutes}</span></div><div class="wpgs-glasses-label">Minutes</div></div>
+        <div class="wpgs-glasses-time-box"><div class="wpgs-glasses-time-box-min"><span class="wpgs-glasses-time">${seconds}</span></div><div class="wpgs-glasses-label">Seconds</div></div>
       `;
     }
 
