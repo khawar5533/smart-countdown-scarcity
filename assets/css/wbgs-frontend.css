@@ -136,6 +136,7 @@ h2.wpgs-glasses-sub-title {
     font-weight: 500;
     font-size: 32px;
     line-height: 1;
+    text-transform : uppercase;
 }
 
 .wpgs-glasses-countdown {

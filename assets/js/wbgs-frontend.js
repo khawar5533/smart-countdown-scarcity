@@ -96,4 +96,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
+//use to redirect when click on shop button 
+jQuery(document).ready(function($) {
+    $('.wpgs-glasses-shop-button').on('click', function(e) {
+        e.preventDefault();
+        var href = $(this).data('href');
+        if (href) {
+            window.location.href = href;
+        }
+    });
+});
