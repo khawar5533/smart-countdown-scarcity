@@ -40,9 +40,18 @@
 // add or update hidden values using ajax
 $('#wbgs_save_modal').on('click', function(e) {
     e.preventDefault();
-
-    let datetime = $('#wbgs_modal_end_time').val();
+    let product_id = $('#wbgs_modal_product_id').val()?.trim() || $('[name="wbgs_product_id"]').val()?.trim();
+    let title = $('#wbgs_item_title').val()?.trim() || $('[name="wbgs_item_title"]').val()?.trim();
+    let subtitle = $('#wbgs_item_subtitle').val()?.trim() || $('[name="wbgs_item_subtitle"]').val()?.trim();
+    let datetime = $('#wbgs_modal_end_time').val()?.trim() || $('[name="end_time"]').val()?.trim();
     let dateOnly = datetime.replace('T', ' ');
+    let description = $('#wbgs_item_description').val()?.trim() || $('[name="wbgs_item_description"]').val()?.trim();
+    let flashsaletitle = $('#wbgs_sale_title').val() || $('[name="wbgs_sale_title"]').val();
+    let discounttitle = $('#wbgs_banner_discount').val() || $('[name="wbgs_banner_discount"]').val();
+    let discountoff = $('#wbgs_banner_percent').val() || $('[name="wbgs_banner_percent"]').val();
+    let stock_alert = $('#wbgs_modal_stock_alert').val()?.trim() || $('[name="wbgs_modal_stock_alert"]').val()?.trim();
+    let banner_image = $('#wbgs_modal_banner').val()?.trim() || $('[name="wbgs_modal_banner"]').val()?.trim();
+    let template = $('#wbgs_template_select').val()?.trim() || $('[name="wbgs_template_select"]').val()?.trim();
     $('#wbgs_modal_end_time').val(datetime); // Preserve original
 
     const editId = $('#wbgs_edit_id').val()?.trim();
@@ -50,28 +59,28 @@ $('#wbgs_save_modal').on('click', function(e) {
 
     const data = {
         action: 'wbgs_save_product_settings',
-        product_id: $('#wbgs_modal_product_id').val(),
-        title: $('#wbgs_item_title').val(),
-        subtitle: $('#wbgs_item_subtitle').val(),
-        flashsaletitle:$('#wbgs_sale_title').val(),
-        discounttitle:$('#wbgs_banner_discount').val(),
-        discountoff:$('#wbgs_banner_percent').val(),
-        description: $('#wbgs_item_description').val(),
-        stock_alert: $('#wbgs_modal_stock_alert').val(),
+        product_id: product_id,
+        title: title,
+        subtitle: subtitle,
+        flashsaletitle:flashsaletitle,
+        discounttitle:discounttitle,
+        discountoff:discountoff,
+        description:description,
+        stock_alert: stock_alert,
         end_time: dateOnly,
-        banner_image: $('#wbgs_modal_banner').val(),
-        template: $('#wbgs_template_select').val(),
+        banner_image: banner_image,
+        template: template,
         disable: 'disable',
         edit_id: editId,
         wbgs_ajax_nonce: wbgs_data.nonce || false
     };
-
     $.ajax({
         url: wbgs_data.ajaxurl,
         type: 'POST',
         data: data,
         dataType: 'json',
         success: function(response) {
+            
             let $message = $('#wbgs_message');
             let isSuccess = response.success === true;
             let msgText = (response.data && response.data.message) || 'Unknown response';
