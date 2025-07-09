@@ -183,3 +183,214 @@ h2.wpgs-glasses-sub-title {
     max-width: 350px;
     object-fit: contain;
 }
+
+@media (min-width: 1920px) {
+  .wpgs-glasses-sale-banner-container {
+    max-width: 1600px;
+    padding: 100px 150px;
+    gap: 50px;
+  }
+
+  .wpgs-glasses-sale-image img {
+    max-width: 500px;
+  }
+}
+@media (max-width: 1919px) and (min-width: 1440px) {
+  .wpgs-glasses-sale-banner-container {
+    padding: 80px 100px;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .wpgs-glasses-sale-image img {
+    max-width: 400px;
+  }
+
+  h2.wpgs-glasses-sub-title {
+    font-size: 68px;
+  }
+
+  .wpgs-glasses-big-number {
+    font-size: 88px;
+  }
+
+  .wpgs-glasses-time {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 1439px) and (min-width: 1024px) {
+  .wpgs-glasses-sale-banner-container {
+    padding: 60px 70px;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 40px;
+  }
+
+  .wpgs-glasses-sale-image {
+    grid-column: span 2;
+    justify-content: center;
+  }
+
+  .wpgs-glasses-sale-image img {
+    max-width: 380px;
+  }
+
+  h2.wpgs-glasses-sub-title {
+    font-size: 60px;
+  }
+
+  .wpgs-glasses-tagline {
+    font-size: 18px;
+  }
+
+  .wpgs-glasses-shop-button {
+    font-size: 20px;
+    padding: 14px 28px;
+  }
+}
+
+@media (max-width: 1023px) and (min-width: 768px) {
+  .wpgs-glasses-sale-banner-container {
+    padding: 50px 40px;
+    grid-template-columns: 1fr;
+    text-align: center;
+    row-gap: 30px;
+  }
+
+  .wpgs-glasses-sale-image {
+    justify-content: center;
+  }
+
+  .wpgs-glasses-sale-image img {
+    max-width: 300px;
+  }
+
+  h1.wpgs-glasses-title,
+  h2.wpgs-glasses-sub-title,
+  .wpgs-glasses-model {
+    font-size: 32px;
+  }
+
+  h2.wpgs-glasses-sub-title {
+    font-size: 52px;
+  }
+
+  .wpgs-glasses-shop-button {
+    font-size: 18px;
+    padding: 12px 24px;
+  }
+
+  .wpgs-glasses-countdown {
+    gap: 10px;
+  }
+
+  .wpgs-glasses-time {
+    font-size: 26px;
+  }
+
+  .wpgs-glasses-label {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 767px) and (min-width: 480px) {
+  .wpgs-glasses-sale-banner-container {
+    grid-template-columns: 1fr;
+    padding: 40px 20px;
+    text-align: center;
+    row-gap: 24px;
+  }
+
+  .wpgs-glasses-sale-image {
+    order: 2;
+    justify-content: center;
+  }
+
+  .wpgs-glasses-sale-image img {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .wpgs-glasses-sub-title {
+    font-size: 44px;
+  }
+
+  .wpgs-glasses-big-number {
+    font-size: 72px;
+  }
+
+  .wpgs-glasses-time {
+    font-size: 24px;
+  }
+
+  .wpgs-glasses-shop-button {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 479px) {
+  .wpgs-glasses-sale-banner-container {
+    grid-template-columns: 1fr;
+    padding: 30px 15px;
+    text-align: center;
+    row-gap: 20px;
+  }
+.wpgs-glasses-countdown {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+ .wpgs-glasses-time-box-min {
+    width: 60px;
+    padding: 10px 6px;
+    border-radius: 14px;
+  }
+  .wpgs-glasses-sale-image {
+    order: 2;
+    justify-content: center;
+  }
+
+  .wpgs-glasses-sale-image img {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  h1.wpgs-glasses-title,
+  .wpgs-glasses-model {
+    font-size: 24px;
+  }
+
+  h2.wpgs-glasses-sub-title {
+    font-size: 36px;
+  }
+
+  .wpgs-glasses-big-number {
+    font-size: 58px;
+  }
+
+  .wpgs-glasses-percent,
+  .wpgs-glasses-off {
+    font-size: 24px;
+  }
+
+  .wpgs-glasses-time {
+    font-size: 18px;
+  }
+
+  .wpgs-glasses-label {
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .wpgs-glasses-shop-button {
+    font-size: 14px;
+    padding: 8px 18px;
+  }
+}
+
+
+
+
+
+
