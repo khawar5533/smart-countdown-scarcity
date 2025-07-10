@@ -407,3 +407,307 @@ h2.wbgs-glasses-sub-title {
     padding: 8px 18px;
   }
 }
+
+/* second template css */
+.wbgs-laptop-sale-banner .wc-block-components-notices.alignwide{
+display: none;
+}
+
+.wbgs-laptop-sale-banner {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    background-image: url(../images/laptiop-banner.png);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.wbgs-laptop-sale-banner-container {
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    height: 500px;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.wbgs-laptop-brand-line {
+    display: flex;
+    align-items: end;
+}
+
+.wbgs-laptop-dell-logo {
+    font-family: "Sattanic";
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 100%;
+    position: relative;
+}
+
+.wbgs-laptop-model {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-bottom: 5px;
+}
+
+.wbgs-laptop-model-number {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 100px;
+    line-height: 70%;
+    letter-spacing: 0%;
+    color: #4982F8;
+}
+
+.wbgs-laptop-tagline {
+    margin: 10px 0 28px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 100%;
+    color: #444;
+}
+
+.wbgs-laptop-shop-button {
+    padding: 12px 36px;
+    background-color: #4a5568;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.wbgs-laptop-shop-button:hover {
+    background-color: #2d3748;
+}
+
+.wbgs-laptop-offer-banner {
+    text-align: center;
+}
+
+.wbgs-laptop-upto {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 100%;
+    text-align: justify;
+}
+
+.wbgs-laptop-offer-text {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 10px;
+}
+
+.wbgs-laptop-big-number {
+    color: #377dff;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 80px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.wbgs-laptop-percent-off {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 5px;
+    line-height: 1.2;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.wbgs-laptop-percent {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.wbgs-laptop-off {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.wbgs-laptop-countdown {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+
+.wbgs-laptop-time-box {
+    background-color: #4a5568;
+    color: white;
+    padding: 15px 10px;
+    border-radius: 4px;
+    width: 80px;
+}
+
+.wbgs-laptop-time {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    display: block;
+}
+
+.wbgs-laptop-label {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -3%;
+    margin-top: 4px;
+    display: block;
+}
+
+.wbgs-laptop-sale-image {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 100%;
+}
+
+.wbgs-laptop-sale-image img {
+    max-width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+@media (max-width: 1280px) {
+    .wbgs-laptop-countdown {
+        gap: 12px;
+    }
+
+    .wbgs-laptop-time {
+        font-size: 20px;
+    }
+
+    .wbgs-laptop-label {
+        font-size: 12px;
+    }
+
+    .wbgs-laptop-time-box {
+        width: 70px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .wbgs-laptop-sale-banner-container {
+        padding: 0 20px;
+    }
+
+    .wbgs-laptop-sale-banner-container {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 997px) {
+    .wbgs-laptop-sale-banner-container {
+        grid-template-columns: 1fr;
+        height: auto;
+        justify-items: center;
+        padding: 20px 20px 0;
+        gap: 12px;
+    }
+
+    .wbgs-laptop-sale-banner {
+        display: flex;
+        align-items: center;
+        background-image: url(../images/mob-bg.png);
+        background-size: cover;
+        background-position: bottom center;
+        background-repeat: no-repeat;
+    }
+
+    .wbgs-laptop-brand-line {
+        display: flex;
+        align-items: end;
+        justify-content: center;
+    }
+
+    .wbgs-laptop-model-number {
+        text-align: center;
+    }
+
+    .wbgs-laptop-ad-container {
+        text-align: center;
+    }
+
+    .wbgs-laptop-tagline {
+        margin: 14px 0;
+        font-size: 18px;
+    }
+
+    .wbgs-laptop-countdown {
+        margin-top: 14px;
+        gap: 14px;
+    }
+
+    .wbgs-laptop-time {
+        font-size: 18px;
+    }
+
+    .wbgs-laptop-label {
+        font-size: 10px;
+    }
+
+    .wbgs-laptop-time-box {
+        width: 55px;
+    }
+
+    .wbgs-laptop-dell-logo {
+        font-size: 22px;
+    }
+
+    .wbgs-laptop-model {
+        font-size: 22px;
+    }
+
+    .wbgs-laptop-model-number {
+        font-size: 70px;
+    }
+
+    .wbgs-laptop-shop-button {
+        padding: 8px 24px;
+        font-size: 18px;
+    }
+
+    .wbgs-laptop-upto {
+        font-size: 20px;
+    }
+
+    .wbgs-laptop-off {
+        font-size: 20px;
+    }
+
+    .wbgs-laptop-percent {
+        font-size: 20px;
+    }
+
+    .wbgs-laptop-big-number {
+        font-size: 60px;
+    }
+}

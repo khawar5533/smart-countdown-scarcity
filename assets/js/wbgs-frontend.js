@@ -43,58 +43,46 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // js code for template two
-function wbgs_startCountdown(element, targetDate) {
-    const interval = setInterval(() => {
-        const now = Date.now();
-        const distance = targetDate - now;
-
-        if (distance < 0) {
-            clearInterval(interval);
-            element.innerHTML = "EXPIRED";
-            return;
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        element.innerHTML = `
-            <div class="time-block"><div class="circle"><div class="value">${days}</div><div class="label">Days</div></div></div>
-            <div class="time-block"><div class="circle"><div class="value">${hours}</div><div class="label">Hours</div></div></div>
-            <div class="time-block"><div class="circle"><div class="value">${minutes}</div><div class="label">Minutes</div></div></div>
-            <div class="time-block"><div class="circle"><div class="value">${seconds}</div><div class="label">Seconds</div></div></div>`;
-    }, 1000);
-}
-
 document.addEventListener("DOMContentLoaded", function () {
-    const countdownElements = document.querySelectorAll(".wbgs-sale-counter");
+  const countdownElements = document.querySelectorAll(".wbgscountdown-laptop");
 
-    countdownElements.forEach((el, index) => {
-        let timestamp = el.getAttribute("data-timestamp");
+  countdownElements.forEach(function (countdownEl, index) {
+    // Generate random number for unique class (can also use Date.now() + index)
+    const randomNum = Math.floor(Math.random() * 100000);
+    const uniqueClass = `wbgscountdown-laptop-${randomNum}`;
 
-        // Generate a unique class using a random number
-        const randomId = Math.floor(Math.random() * 100000);
-        const dynamicClass = `wbgs-sale-counter-${randomId}`;
-        el.classList.add("dunsmic", dynamicClass);
+    // Add the unique class to the element
+    countdownEl.classList.add("dunsmic", uniqueClass);
 
-        if (timestamp) {
-            let targetDate = parseInt(timestamp, 10);
+    // Read the end time from the data attribute
+    const endTime = parseInt(countdownEl.dataset.endTime, 10) * 1000;
 
-            // Convert from seconds to milliseconds if it's likely in seconds
-            if (targetDate < 1000000000000) {
-                targetDate *= 1000;
-            }
+    function updateCountdown() {
+      const now = Date.now();
+      const distance = endTime - now;
 
-            if (!isNaN(targetDate)) {
-                wbgs_startCountdown(el, targetDate);
-            } else {
-                el.innerHTML = "Invalid date";
-            }
-        } else {
-            el.innerHTML = "Missing timestamp";
-        }
-    });
+      if (distance <= 0) {
+        countdownEl.innerHTML = "EXPIRED";
+        clearInterval(interval);
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdownEl.innerHTML = `
+        <div class="wbgs-laptop-time-box"><div class="wbgs-laptop-time-box-min"><span class="wbgs-laptop-time">${days}</span></div><div class="wbgs-laptop-label">Days</div></div>
+        <div class="wbgs-laptop-time-box"><div class="wbgs-laptop-time-box-min"><span class="wbgs-laptop-time">${hours}</span></div><div class="wbgs-laptop-label">Hour</div></div>
+        <div class="wbgs-laptop-time-box"><div class="wbgs-laptop-time-box-min"><span class="wbgs-laptop-time">${minutes}</span></div><div class="wbgs-laptop-label">Minutes</div></div>
+        <div class="wbgs-laptop-time-box"><div class="wbgs-laptop-time-box-min"><span class="wbgs-laptop-time">${seconds}</span></div><div class="wbgs-laptop-label">Seconds</div></div>
+      `;
+    }
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+  });
 });
 //use to redirect when click on shop button 
 jQuery(document).ready(function($) {
