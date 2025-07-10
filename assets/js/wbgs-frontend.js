@@ -29,10 +29,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       countdownEl.innerHTML = `
-        <div class="wpgs-glasses-time-box"><div class="wpgs-glasses-time-box-min"><span class="wpgs-glasses-time">${days}</span></div><div class="wpgs-glasses-label">Days</div></div> 
-        <div class="wpgs-glasses-time-box"><div class="wpgs-glasses-time-box-min"><span class="wpgs-glasses-time">${hours}</span></div><div class="wpgs-glasses-label">Hour</div></div>
-        <div class="wpgs-glasses-time-box"><div class="wpgs-glasses-time-box-min"><span class="wpgs-glasses-time">${minutes}</span></div><div class="wpgs-glasses-label">Minutes</div></div>
-        <div class="wpgs-glasses-time-box"><div class="wpgs-glasses-time-box-min"><span class="wpgs-glasses-time">${seconds}</span></div><div class="wpgs-glasses-label">Seconds</div></div>
+        <div class="wbgs-glasses-time-box"><div class="wbgs-glasses-time-box-min"><span class="wbgs-glasses-time">${days}</span></div><div class="wbgs-glasses-label">Days</div></div> 
+        <div class="wbgs-glasses-time-box"><div class="wbgs-glasses-time-box-min"><span class="wbgs-glasses-time">${hours}</span></div><div class="wbgs-glasses-label">Hour</div></div>
+        <div class="wbgs-glasses-time-box"><div class="wbgs-glasses-time-box-min"><span class="wbgs-glasses-time">${minutes}</span></div><div class="wbgs-glasses-label">Minutes</div></div>
+        <div class="wbgs-glasses-time-box"><div class="wbgs-glasses-time-box-min"><span class="wbgs-glasses-time">${seconds}</span></div><div class="wbgs-glasses-label">Seconds</div></div>
       `;
     }
 
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 //use to redirect when click on shop button 
 jQuery(document).ready(function($) {
-    $('.wpgs-glasses-shop-button').on('click', function(e) {
+    $('.wbgs-glasses-shop-button').on('click', function(e) {
         e.preventDefault();
         var href = $(this).data('href');
         if (href) {
