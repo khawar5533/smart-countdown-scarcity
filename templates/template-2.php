@@ -22,24 +22,6 @@
                 </div>
             </div>
             <div id="{{countdown_id}}" class="wbgscountdown-laptop wbgs-laptop-countdown" data-end-time="{{end_time}}"></div>
-            <!-- <div class="wbgs-laptop-countdown">
-                <div class="wbgs-laptop-time-box">
-                    <span class="wbgs-laptop-time">2</span>
-                    <span class="wbgs-laptop-label">DAYS</span>
-                </div>
-                <div class="wbgs-laptop-time-box">
-                    <span class="wbgs-laptop-time">10</span>
-                    <span class="wbgs-laptop-label">HOURS</span>
-                </div>
-                <div class="wbgs-laptop-time-box">
-                    <span class="wbgs-laptop-time">40</span>
-                    <span class="wbgs-laptop-label">MINUTES</span>
-                </div>
-                <div class="wbgs-laptop-time-box">
-                    <span class="wbgs-laptop-time">15</span>
-                    <span class="wbgs-laptop-label">SECONDS</span>
-                </div>
-            </div> -->
         </div>
         <div class="wbgs-laptop-sale-image">
             <img src="{{image_url}}" alt="{{title}}" />
