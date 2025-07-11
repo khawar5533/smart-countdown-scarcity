@@ -34,7 +34,8 @@
   grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
   align-items: center;
-  padding: 90px 80px;
+  max-width: 1420px;
+  padding: 0 40px;
 }
 
 .wbgs-glasses-brand-line {
@@ -431,6 +432,7 @@ h2.wbgs-glasses-sub-title {
   height: 500px;
   align-items: center;
   padding: 0 40px;
+  max-width: 1420px;
 }
 
 .wbgs-laptop-brand-line {
@@ -458,7 +460,7 @@ h2.wbgs-glasses-sub-title {
 .wbgs-laptop-model-number {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
-  font-size: 100px;
+  font-size: 52px;
   line-height: 70%;
   letter-spacing: 0%;
   color: #4982F8;
@@ -736,7 +738,7 @@ h2.wbgs-glasses-sub-title {
   gap: 24px;
   align-items: center;
   padding: 40px 40px 0;
-  max-width: 1380px;
+  max-width: 1420px;
 }
 
 .wbgs-powerbank-brand-line {
@@ -948,6 +950,7 @@ h2.wbgs-glasses-sub-title {
 .wbgs-speaker-sale-banner .wc-block-components-notices.alignwide {
   display: none;
 }
+
 .wbgs-speaker-sale-banner {
   max-width: 100%;
   display: flex;
@@ -956,7 +959,7 @@ h2.wbgs-glasses-sub-title {
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
-  padding: 20px 40px;
+
 }
 
 .wbgs-speaker-sale-banner-container {
@@ -966,6 +969,8 @@ h2.wbgs-glasses-sub-title {
   gap: 14px;
   width: 100%;
   align-items: center;
+  max-width: 1420px;
+  padding: 20px 40px;
 }
 
 .wbgs-speaker-dell-logo {
@@ -1172,4 +1177,9 @@ h2.wbgs-glasses-sub-title {
   .wbgs-speaker-label {
     font-size: 10px;
   }
+}
+
+.has-global-padding {
+  padding-left: 0;
+  padding-right: 0;
 }

@@ -13,7 +13,7 @@
         <div class="wbgs-speaker-offer-banner">
             <div class="wbgs-speaker-offer-text">
                 <div class="wbgs-speaker-discount-line">
-                    <!-- <p class="wbgs-speaker-upto">UPTO</p> -->
+                    <p class="wbgs-speaker-upto">{{flashtitle}}</p>
                     <span class="wbgs-speaker-big-number">{{off}}</span>
                 </div>
                 <div class="wbgs-speaker-percent-off">
