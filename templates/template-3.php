@@ -1,10 +1,21 @@
-     <div class="wbgs_banner_inner">
-        <h3>{{custom_text}}</h3>
-        <h4 class="product-title">{{title}}</h4>
-        <p class="sale-price">Sale Price: {{sale_price}}</p>
-        <p class="stock-info">Stock Remaining: {{stock}}</p>
-      </div>
-      <!-- <div class="wbgacountdown_2" data-timestamp="{{end_time}}"></div> -->
-      <div class="wbgs_banner_right">
-        <img src="{{image_url}}" alt="{{title}}" width="50" height="25">
-      </div>
+  <section class="wbgs-powerbank-sale-banner">
+        <div class="wbgs-powerbank-sale-banner-container">
+            <div class="wbgs-powerbank-brand-info">
+                <div class="wbgs-powerbank-ad-container">
+                    <h2 class="wbgs-powerbank-sub-title">{{subtitle}}</h2>
+                    <h1 class="wbgs-powerbank-title">{{title}}</h1>
+                    <p class="wbgs-powerbank-tagline">{{description}}</p>
+                    <button class="wbgs-powerbank-shop-button" data-href="{{url}}">{{shop now}}</button>
+                </div>
+            </div>
+            <div class="wbgs-powerbank-offer-banner">
+                <div class="wbgs-powerbank-offer-text">
+                    <div class="wbgs-powerbank-discount-line"><span class="wbgs-powerbank-big-number">{{off}}</span></div>
+                    <div class="wbgs-powerbank-percent-off"><span class="wbgs-powerbank-off">{{percent}}{{discounttitle}}</span></div>
+                </div>
+                <div id="{{countdown_id}}" class="wbgs-powerbank-countdown wbgscountdown-powerbank" data-end-time="{{end_time}}">
+                </div>
+            </div>
+            <div class="wbgs-powerbank-sale-image"><img src="{{image_url}}" alt="{{title}}" /></div>
+        </div>
+    </section>
