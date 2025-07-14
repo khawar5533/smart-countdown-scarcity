@@ -7,7 +7,7 @@
                 </div>
                 <div class="wbgs-laptop-model-number">{{title}}</div>
                 <p class="wbgs-laptop-tagline">{{description}}</p>
-                <button class="wbgs-laptop-shop-button" data-href="{{url}}">{{shop now}}</button>
+                <button class="wbgs-laptop-shop-button wbgs-glasses-shop-button" data-href="{{url}}">{{shop now}}</button>
             </div>
         </div>
         <div class="wbgs-laptop-offer-banner">
