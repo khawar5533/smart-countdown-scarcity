@@ -13,7 +13,6 @@
         <div class="wbgs-laptop-offer-banner">
             <div class="wbgs-laptop-offer-text">
                 <div class="wbgs-laptop-discount-line">
-                    <!-- <p class="wbgs-laptop-upto">{{upto}}</p> -->
                     <span class="wbgs-laptop-big-number">{{off}}</span>
                 </div>
                 <div class="wbgs-laptop-percent-off">
