@@ -5,7 +5,7 @@
                     <h2 class="wbgs-powerbank-sub-title">{{subtitle}}</h2>
                     <h1 class="wbgs-powerbank-title">{{title}}</h1>
                     <p class="wbgs-powerbank-tagline">{{description}}</p>
-                    <button class="wbgs-powerbank-shop-button" data-href="{{url}}">{{shop now}}</button>
+                    <button class="wbgs-powerbank-shop-button wbgs-glasses-shop-button" data-href="{{url}}">{{shop now}}</button>
                 </div>
             </div>
             <div class="wbgs-powerbank-offer-banner">

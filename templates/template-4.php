@@ -7,7 +7,7 @@
                     <p class="wbgs-speaker-dell-logo">{{title}}</p>
                 </div>
                 <p class="wbgs-speaker-tagline">{{description}}</p>
-                <button class="wbgs-speaker-shop-button" data-href="{{url}}">{{shop now}}</button>
+                <button class="wbgs-speaker-shop-button wbgs-glasses-shop-button" data-href="{{url}}">{{shop now}}</button>
             </div>
         </div>
         <div class="wbgs-speaker-offer-banner">
