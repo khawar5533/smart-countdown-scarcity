@@ -189,7 +189,8 @@ $(document).on('change', 'input[name="choice"]', function () {
         data: {
             action: 'wbgs_edit_product_status',
             selected_product_id: selectedProductId,
-            all_product_ids: allProductIds
+            all_product_ids: allProductIds,
+            wbgs_ajax_nonce_edit: wbgs_data.nonce_edit || false
         },
         success: function (response) {
             console.log('Statuses updated:', response);

@@ -1,3 +1,4 @@
+<?php // Template: banner-one ?>
 <div class="wbgs-glasses-sale-banner">
     <div class="wbgs-glasses-sale-banner-container">
         <div class="wbgs-glasses-brand-info">

@@ -1,3 +1,4 @@
+  <?php // Template: banner-Three ?>
   <section class="wbgs-powerbank-sale-banner">
         <div class="wbgs-powerbank-sale-banner-container">
             <div class="wbgs-powerbank-brand-info">

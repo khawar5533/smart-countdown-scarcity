@@ -1,3 +1,4 @@
+<?php // Template: banner-two ?>
 <section class="wbgs-laptop-sale-banner">
     <div class="wbgs-laptop-sale-banner-container">
         <div class="wbgs-laptop-brand-info">

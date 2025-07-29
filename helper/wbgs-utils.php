@@ -7,7 +7,6 @@ if (!function_exists('wbgs_render_template')) {
         $template_file = plugin_dir_path(__DIR__) . 'templates/' . $template_key . '.php';
 
         if (!file_exists($template_file)) {
-            error_log("[WBGS] Missing template file: $template_file");
             return '<div class="wbgs-template-fallback">Template not found.</div>';
         }
 
@@ -145,7 +144,7 @@ if (!function_exists('wbgs_output_editor_shortcodes_on_shop_pages')) {
                 $content = apply_filters('the_content', $post->post_content);
 
                 if (!empty($content)) {
-                    echo '<div class="wbgs-content-area">' . $content . '</div>';
+                    echo '<div class="wbgs-content-area">' . esc_attr($content) . '</div>';
                 }
             }
         }
