@@ -200,7 +200,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
                          data-description="<?php echo esc_attr($description);?>" data-flashsale="<?php echo esc_attr($flashsaletitl );?>" data-discountTitl="<?php echo esc_attr($discountTitl );?>"
                          data-stock="<?php echo esc_attr($stock_alert); ?>" data-end_time="<?php echo esc_attr($end_time );?>"
                          data-banner="<?php echo esc_url($banner_image) ;?>"  id="wbgs-editbox-<?php echo esc_attr($product_id);?>" value="">
-                            <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/images/edit.png'; ?>" alt="Edit" style="width:16px; height:16px;">
+                            <img src="<?php echo esc_url(plugin_dir_url(dirname(__FILE__)) . 'assets/images/edit.png'); ?>" alt="Edit" style="width:16px; height:16px;">
                         </a>
                     </td>
                 </tr> 
@@ -219,7 +219,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
             wp_send_json_error(['message' => 'Permission denied']);
         }
 
-        if (!isset($_POST['wbgs_ajax_nonce']) || !wp_verify_nonce($_POST['wbgs_ajax_nonce'], 'wbgs_nonce')) {
+        if (!isset($_POST['wbgs_ajax_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['wbgs_ajax_nonce'])), 'wbgs_nonce')) {
             wp_send_json_error(['message' => 'Invalid nonce']);
         }
 
@@ -229,20 +229,20 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
         }
 
         $data = [
-            'title' => sanitize_text_field($_POST['title'] ?? ''),
-            'subtitle' => sanitize_text_field($_POST['subtitle'] ?? ''),
-            'description' => sanitize_text_field($_POST['description'] ?? ''),
-            'stock_alert'     => sanitize_text_field($_POST['stock_alert'] ?? ''),
-            'end_time'        => strtotime(sanitize_text_field($_POST['end_time'] ?? '')),
-            'banner_image'    => esc_url_raw($_POST['banner_image'] ?? ''),
-            'flashsaletitle'    => sanitize_text_field($_POST['flashsaletitle'] ?? ''),
-            'discounttitle'    => sanitize_text_field($_POST['discounttitle'] ?? ''),
-            'discountoff'    => sanitize_text_field($_POST['discountoff'] ?? ''),
-            'template'        => sanitize_text_field($_POST['template'] ?? '')
+            'title'           => isset($_POST['title']) ? sanitize_text_field(wp_unslash($_POST['title'])) : '',
+            'subtitle'        => isset($_POST['subtitle']) ? sanitize_text_field(wp_unslash($_POST['subtitle'])) : '',
+            'description'     => isset($_POST['description']) ? sanitize_text_field(wp_unslash($_POST['description'])) : '',
+            'stock_alert'     => isset($_POST['stock_alert']) ? sanitize_text_field(wp_unslash($_POST['stock_alert'])) : '',
+            'end_time'        => isset($_POST['end_time']) ? strtotime(sanitize_text_field(wp_unslash($_POST['end_time']))) : null,
+            'banner_image'    => isset($_POST['banner_image']) ? esc_url_raw(wp_unslash($_POST['banner_image'])) : '',
+            'flashsaletitle'  => isset($_POST['flashsaletitle']) ? sanitize_text_field(wp_unslash($_POST['flashsaletitle'])) : '',
+            'discounttitle'   => isset($_POST['discounttitle']) ? sanitize_text_field(wp_unslash($_POST['discounttitle'])) : '',
+            'discountoff'     => isset($_POST['discountoff']) ? sanitize_text_field(wp_unslash($_POST['discountoff'])) : '',
+            'template'        => isset($_POST['template']) ? sanitize_text_field(wp_unslash($_POST['template'])) : '',
         ];
 
         if(isset($_POST['edit_id']) && !empty($_POST['edit_id'])){
-           $data['edit_id'] = sanitize_text_field($_POST['edit_id'] ?? '');
+           $data['edit_id'] = sanitize_text_field(wp_unslash($_POST['edit_id']) ?? '');
         }
         // Call the unified function
         $result = wbgs_save_and_register_product_data($product_id, $data);
@@ -265,32 +265,62 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
 
 
     //update the product statius
-    public function wbgs_edit_product_status() {
-        $selected_id = intval($_POST['selected_product_id']);
-        $all_ids = isset($_POST['all_product_ids']) ? $_POST['all_product_ids'] : [];
+   public function wbgs_edit_product_status() {
 
-        if (!is_array($all_ids)) {
-            wp_send_json_error('Invalid product IDs');
-            return;
-        }
-
-        foreach ($all_ids as $id) {
-            $product_id = intval($id);
-            if ($product_id <= 0) continue;
-
-            $status = ($product_id === $selected_id) ? 'enable' : 'disable';
-            $option_key = 'wbgs_product_' . $product_id . '_data';
-
-            $option_data = get_option($option_key);
-
-            if (is_array($option_data)) {
-                $option_data['status'] = $status;
-                update_option($option_key, $option_data);
-            }
-        }
-
-        wp_send_json_success('All statuses updated successfully.');
+    // Nonce validation
+    if (
+        !isset($_POST['wbgs_ajax_nonce_edit']) ||
+        !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['wbgs_ajax_nonce_edit'])), 'wbgs_edit_nonce')
+    ) {
+        wp_send_json_error(['message' => 'Invalid nonce']);
     }
+
+    // Get and sanitize selected product ID
+    $selected_id = isset($_POST['selected_product_id']) ? intval(wp_unslash($_POST['selected_product_id'])) : 0;
+
+    // Get and sanitize all product IDs
+    $all_ids = isset($_POST['all_product_ids'])
+    ? (
+        is_array($_POST['all_product_ids'])
+            ? array_map('intval', wp_unslash($_POST['all_product_ids']))
+            : array_map(
+                'intval',
+                explode(',', sanitize_text_field(wp_unslash($_POST['all_product_ids'])))
+            )
+    )
+    : [];
+
+    if (empty($all_ids) || !is_array($all_ids)) {
+        wp_send_json_error(['message' => 'Invalid product IDs']);
+    }
+
+    $updated_ids = [];
+
+    foreach ($all_ids as $product_id) {
+        if ($product_id <= 0) continue;
+
+        $status = ($product_id === $selected_id) ? 'enable' : 'disable';
+        $option_key = 'wbgs_product_' . $product_id . '_data';
+        $option_data = get_option($option_key);
+
+        // Initialize if not found
+        if (!is_array($option_data)) {
+            $option_data = [];
+        }
+
+        // Update and save
+        $option_data['status'] = $status;
+        update_option($option_key, $option_data);
+
+        $updated_ids[] = $product_id;
+    }
+
+    wp_send_json_success([
+        'message' => 'Statuses updated successfully.',
+        'updated_ids' => $updated_ids,
+        'selected_enabled' => $selected_id,
+    ]);
+}
 
     public function wbgs_render_custom_option_page() {
     ?>
@@ -298,7 +328,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
         <h1><?php esc_html_e('Custom Option Setting', 'smart-countdown-scarcity'); ?></h1>
         <?php if (isset($_POST['wbgs_custom_option_text'])) : 
             check_admin_referer('wbgs_custom_option_save');
-            $custom_text = sanitize_text_field($_POST['wbgs_custom_option_text']);
+            $custom_text = sanitize_text_field(wp_unslash($_POST['wbgs_custom_option_text']));
             update_option('wbgs_custom_option_text', $custom_text);
             echo '<div class="updated"><p>Saved successfully.</p></div>';
         endif;

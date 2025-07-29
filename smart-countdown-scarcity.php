@@ -76,7 +76,8 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
             // Localize the script to pass PHP data to JS
              wp_localize_script('wbgs-admin-js', 'wbgs_data', [
                 'ajaxurl' => admin_url('admin-ajax.php'),
-                'nonce'   => wp_create_nonce('wbgs_nonce')
+                'nonce'   => wp_create_nonce('wbgs_nonce'),
+                'nonce_edit'   => wp_create_nonce('wbgs_edit_nonce'),
             ]);
             // Enqueue CSS
             wp_enqueue_style(

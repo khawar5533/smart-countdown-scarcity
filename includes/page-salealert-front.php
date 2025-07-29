@@ -32,7 +32,7 @@ if (!class_exists('WBGS_SmartCountdownFront')) {
                 $template_key  = basename($template_file, '.php');
 
                 if ($status === 'enable' && !empty($template_key) && function_exists('wbgs_render_template')) {
-                    echo wbgs_render_template($template_key, $front);
+                    echo  wp_kses_post(wbgs_render_template($template_key, $front));
                 }
             }
         }
