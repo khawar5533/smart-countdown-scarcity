@@ -4,7 +4,7 @@
  * Plugin URI:        https://www.webbuggs.com/
  * Description:       Display time-limited, product-specific sale banners on WooCommerce product page, showing discount details and countdown timers only during active sale periods to boost urgency and drive conversions.
  * Version:           1.0.0
- * Requires at least: 6.8
+ * Requires at least: 6.7
  * Author:            Webbuggs
  * Author URI:        https://www.webbuggs.com/
  * Text Domain:       smart-countdown-scarcity
@@ -71,6 +71,7 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
                 'wbgs-admin-js',
                 plugin_dir_url(__FILE__) . 'assets/js/wbgs-main.js',
                 ['jquery'],
+                '1.0.0',
                 true
             );
             // Localize the script to pass PHP data to JS
@@ -84,7 +85,7 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
                 'wbgs-admin-css',
                 plugin_dir_url(__FILE__) . 'assets/css/wbgs-styles.css',
                 [],
-                null // version (you can specify a version if needed)
+                '1.0.0' // version (you can specify a version if needed)
             );
         
         
@@ -95,20 +96,20 @@ if (!class_exists('WBGS_SmartCountdownScarcity')) {
                 'wbgs-frontend-css',
                 plugin_dir_url(__FILE__) . 'assets/css/wbgs-frontend.css',
                 [],
-                null // You can specify a version like '1.0.0'
+                '1.0.0' // You can specify a version like '1.0.0'
             );
             wp_enqueue_style(
                 'wbgs-google-fonts',
                 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap',
                 [],
-                null
+                '1.0.0'
             );
             // Enqueue JS
             wp_enqueue_script(
                 'wbgs-frontend-js', // Handle
                 plugin_dir_url(__FILE__) . 'assets/js/wbgs-frontend.js', // Path to your JS file
                 ['jquery'], // Dependencies, e.g. jQuery, or [] if none
-                null, // Version number (null for no version)
+                '1.0.0', // Version number (null for no version)
                 true // Load in footer (true recommended for better performance)
             );
         }

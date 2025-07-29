@@ -321,7 +321,7 @@ if (!class_exists('WBGS_SmartCountdownScarcitySetting')) {
         'selected_enabled' => $selected_id,
     ]);
 }
-
+   // use to show label sub menu
     public function wbgs_render_custom_option_page() {
     ?>
     <div class="wrap">

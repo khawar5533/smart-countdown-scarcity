@@ -8,7 +8,7 @@ Stable tag: 1.0.0
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html  
 
-Display time-limited, product-specific sale banners on WooCommerce product pages. Show discount details and countdown timers only during active sale periods to boost urgency and drive conversions.
+Display time-limited, product-specific sale banners on WooCommerce products to create urgency and increase conversions.
 
 == Description ==
 

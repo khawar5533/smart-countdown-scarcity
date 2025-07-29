@@ -1,3 +1,4 @@
+ <?php // Template: banner-Four ?>
  <section class="wbgs-speaker-sale-banner">
     <div class="wbgs-speaker-sale-banner-container">
         <div class="wbgs-speaker-brand-info">
